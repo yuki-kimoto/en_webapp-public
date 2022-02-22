@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>LinuxにおけるWeb開発環境の構築 - Perl Web App Development Tutorial</title>
-<meta name="description" content="Ubuntu, CentOS, DebianなどのLinuxサーバーにおけるWeb開発環境の構築について解説します。">
+<title> Building a web development environment on Linux  - Perl Web App Development Tutorial</title>
+<meta name="description" content="Explains how to build a web development environment on Linux servers such as Ubuntu, CentOS, and Debian.">
   </head>
   <body>
     <div class="container">
@@ -53,123 +51,122 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <ol class="bread" itemscope itemtype="http://schema.org/BreadcrumbList">
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <ol class = "bread" itemscope itemtype = "http://schema.org/BreadcrumbList">
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     <a itemprop="item" href="/" class="bread-home">
-      <span itemprop="name">
-        <img src="/images/bread/home.png" alt="Webシステム開発入門 Perl&Mojolicious">
+      <span itemprop = "name">
+        <img src = "/ images / bread / home.png" alt = "Introduction to Web System Development Perl & Mojolicious">
       </span>
-    </a>
-    <meta itemprop="position" content="1" />
+   </a>
+    <meta itemprop = "position" content = "1" />
   </li>
-  &#8250;
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+  & # 8250;
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     here
   </li>
 </ol>
-<h2><a href="/blog/20191120072622.html">LinuxにおけるWeb開発環境の構築</a></h2>
+<h2><a href="/blog/20191120072622.html"> Building a web development environment on Linux </a></h2>
 <p>
-  Ubuntu, CentOS, DebianなどのLinuxサーバーにおけるWeb開発環境の構築について解説します。
+  Explains how to build a web development environment on Linux servers such as Ubuntu, CentOS, and Debian.
 </p>
 <p>
-  LinuxサーバーにSSHを使って接続できていることは前提とします。
+  It is assumed that you can connect to the Linux server using SSH.
 </p>
-<h3>PerlでWebシステム開発環境を構築するための前提</h3>
+<h3> Prerequisites for building a Web system development environment with Perl </h3>
 <p>
-  各Linuxにおいて、Perlをインストールすることの前提について書いておきます。yumやapt-getなど、パッケージのインストールコマンドがLinuxディストリビューションにおいて異なるので、必要な内容を書いておきます。
+  I will write about the prerequisites for installing Perl on each Linux. Package installation commands such as yum and apt-get are different for Linux distributions, so write down what you need.
 </p>
-<h4>make</h4>
+<h4> make </h4>
 <p>
-  makeがインストールされていない場合はインストールしてください。
+  If make is not installed, please install it.
 </p>
 <pre>
-# CentOSの例
-sudo yum -y install make
+#CentOS example
+sudo yum -y install make make
 </pre>
 <p>
-  makeは、Perlのモジュールをインストールするときに、その手順を実行するツールとして利用されます。
+  make is used as a tool to perform the steps when installing a Perl module.
 </p>
-<h4>gcc</h4>
+<h4> gcc </h4>
 <p>
-  gccがインストールされていない場合は、インストールしてください。
+  If gcc is not installed, install it.
 </p>
 <pre>
-# CentOSの例
+#CentOS example
 sudo yum -y install gcc
 </pre>
 <p>
-  gccは、PerlのモジュールでC拡張が使われている場合に、これをコンパイルするために必要です。
+  gcc is needed to compile the C extension if it's used in a Perl module.
 </p>
-<h4>patch</h4>
+<h4> patch </h4>
 <p>
-  patchがインストールされていない場合は、インストールしてください。
+  If patch is not installed, install it.
 </p>
 <pre>
-# CentOSの例
-sudo yum -y install patch
+#CentOS example
+sudo yum -y install patch patch
 </pre>
 <p>
-  patchは、perlbrewと呼ばれるPerlのインストールツールを使う場合に必要です。
+  patch is required if you want to use a Perl installation tool called perlbrew.
 </p>
-<h4>openssl</h4>
+<h4> openssl </h4>
 <p>
-  opensslがインストールされていない場合は、インストールしてください。opensslのコマンドに加えて、opensslのライブラリ(openssl-devel。名前はLinuxディストリビューションで異なる)もインストールします。
+  If openssl is not installed, please install it. In addition to the openssl commands, it also installs the openssl library (openssl-devel, named differently for Linux distributions).
 </p>
 <pre>
-# CentOSの例
+#CentOS example
 sudo yum -y install openssl
 sudo yum -y install openssl-devel
 </pre>
 <p>
-  opensslは、Perlとは直接的には、関係がありませんが、最近のWebがHTTPSで接続することを、求められるため、あらかじめインストールしておきましょう。
+  openssl is not directly related to Perl, but it should be installed in advance as the recent web requires HTTPS to connect.
 </p>
-<h4>git</h4>
+<h4> git </h4>
 <p>
-  gitがインストールされていない場合は、インストールしてください。
+  If you don't have git installed, install it.
 </p>
 <pre>
-# CentOSの例
+#CentOS example
 sudo yum -y git
 </pre>
 <p>
-  gitは、Perlとは直接関係がありませんが、Webシステム開発におけるソースコード管理に使うので、インストールしておきましょう。
+  Although git is not directly related to Perl, it is used for source code control in Web system development, so let's install it.
 </p>
-<h4>システムPerl</h4>
+<h4> System Perl </h4>
 <p>
-  Webシステム開発には、ユーザー環境にインストールするPerlを使うのですが、システムPerlもインストールしておいた方が、何かと便利でしょう。
+  For Web system development, I use Perl that is installed in the user environment, but it would be convenient if I also installed the system Perl.
 </p>
 <pre>
-# CentOSの例
+#CentOS example
 sudo yum -y install perl perl-core
 </pre>
-<h3>Perlのユーザー環境へのインストール</h3>
+<h3> Installing Perl in the user environment </h3>
 <p>
-  次にPerlをインストールしましょう。Perlをユーザー環境にインストールします。以下の記事の「ユーザー環境へのPerlのインストール」という部分です。
+  Next, let's install Perl. Install Perl in your environment. The part of the following article, "Installing Perl in the User Environment".
 </p>
 <ul>
-  <li><a href="https://perlzemi.com/blog/20180813153411.html">LinuxへのPerlのインストール</a></li>
+  <li> <a href="https://perlzemi.com/blog/20180813153411.html"> Installing Perl on Linux</a> </li>
 </ul>
 <p>
-  Webシステム開発を行う場合は、コアPerlではなく、上記手順でインストールしたものを使います。一番大きな理由は、CPANというサイトからモジュールをインストールするのに、ユーザー環境にPerlをインストールしておくのが、簡単で便利だからです。
+  When developing a Web system, use the one installed in the above procedure instead of the core Perl. The biggest reason is that it's easy and convenient to have Perl installed in your environment to install modules from a site called CPAN.
 </p>
 <p>
-  また、Perlだけのアップグレードをすることも、システムPerlに依存せずにできます。
+  You can also upgrade Perl-only without relying on the system Perl.
 </p>
-<h3>Mojoliciousのインストール</h3>
+<h3> Install Mojolicious </h3>
 <p>
-  最後に、LinuxへのPerlのインストールでインストールしたcpanmというツールを使ってMojoliciousをインストールします。
+  Finally, install Mojolicious using a tool called cpanm that you installed when you installed Perl on Linux.
 </p>
 <pre>
 cpanm Mojolicious
 </pre>
 <p>
-  Webシステム開発環境の構築お疲れさまでした。
+  Thank you for building the Web system development environment.
 </p>
 <p>
-  (UbuntuとDebianにおけるCentOSにおけるyumに該当する部分を記述できる方、お手伝い募集中)
+  (Those who can describe the part corresponding to yum in CentOS in Ubuntu and Debian, we are looking for help)
 </p>
 
   </div>
@@ -197,8 +194,7 @@ cpanm Mojolicious
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

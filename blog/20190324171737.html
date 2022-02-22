@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>さくらVPSで「Perl + Mojolicious」Webアプリ開発 第6回 CentOS6というLinux OS - Perl Web App Development Tutorial</title>
-<meta name="description" content="リモートコンソールからログインするとコマンドを実行できる画面になります。">
+<title> "Perl + Mojolicious" Web application development with Sakura VPS 6th Linux OS called CentOS6  - Perl Web App Development Tutorial</title>
+<meta name="description" content="When you log in from the remote console, you will see a screen where you can execute commands.">
   </head>
   <body>
     <div class="container">
@@ -53,66 +51,65 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <ol class="bread" itemscope itemtype="http://schema.org/BreadcrumbList">
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <ol class = "bread" itemscope itemtype = "http://schema.org/BreadcrumbList">
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     <a itemprop="item" href="/" class="bread-home">
-      <span itemprop="name">
-        <img src="/images/bread/home.png" alt="Mojoliciousスタートアップ">
+      <span itemprop = "name">
+        <img src = "/ images / bread / home.png" alt = "Mojolicious Startup">
       </span>
-    </a>
-    <meta itemprop="position" content="1" />
+   </a>
+    <meta itemprop = "position" content = "1" />
   </li>
-  &#8250;
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+  & # 8250;
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     here
   </li>
 </ol>
-<h2><a href="/blog/20190324171737.html">さくらVPSで「Perl + Mojolicious」Webアプリ開発 第6回 CentOS6というLinux OS</a></h2>
+<h2><a href="/blog/20190324171737.html"> "Perl + Mojolicious" Web application development with Sakura VPS 6th Linux OS called CentOS6 </a></h2>
 <p>
-  　リモートコンソールからログインするとコマンドを実行できる画面になります。
+  When you log in from the remote console, you will see a screen where you can execute commands.
 </p>
 <pre>
-[root@www11197ue ~]#
+[root @www11197ue ~] #
 </pre>
 <p>
-  　これはいったいなんでしょうか。実はCent OS6というOSにrootユーザーでログインしている状態になっています。Cent OSというのはLinuxと呼ばれるOSのひとつの種類で、WindowsやMac OS Xなどと似たようなものだと考えてください。
+  What on earth is this? Actually, I am logged in to the OS called Cent OS 6 as a root user. Think of Cent OS as a type of operating system called Linux, similar to Windows or Mac OS X.
 </p>
 <p>
-  　たとえばWindowsでは、グラフィカルな画面でマウスなどを使って、さまざまな操作を行うことができますが、さくらのVPSを使う場合は、グラフィカルな画面ではなくて、実際に文字を打ち込んで、コマンドを使って、さまざまな操作を行います。
+  For example, in Windows, you can perform various operations on the graphical screen using the mouse etc., but when using Sakura's VPS, you can actually type characters and use commands instead of the graphical screen. And perform various operations.
 </p>
 <pre>
-さくらVPSではCentOS 6というOSにログインしてコマンドを使って操作を行う。
+In Sakura VPS, log in to the OS called CentOS 6 and operate using commands.
 </pre>
 <p>
-  　これが最初の難関になると思います。今まではコンピューターというものは、グラフィカルでマウスを使って簡単に操作できるものでした。でもさくらVPSを使った開発では、コマンドを暗記して、コマンドを使って、コンピューターに対して命令を与えて操作を行う必要があります。
+  I think this will be the first challenge. Until now, computers have been graphical and easy to operate with a mouse. However, in development using Sakura VPS, it is necessary to memorize commands and use the commands to give commands to the computer to perform operations.
 </p>
 <p>
-  　コマンドラインも初めてで、LinuxというOSも初めてです。でもチャレンジする価値は十分にあります。これに慣れてしまえば、どんなことでも可能になるWebアプリケーションを作ることができるからです。プロバイダーのサービスに依存することなく、完全に自分でWebアプリケーションを管理下におくことができます。
+  It was the first time for me to use the command line, and it was also the first time for me to use an OS called Linux. But it's well worth the challenge. Once you get used to this, you can create web applications that can do anything. You can completely control the web application yourself, without relying on the services of the provider.
 </p>
 <p>
-  >>
+  >> >>
 </p>
 <p>
-  自由で柔軟性があり移植性の高いWebアプリケーションを作成できるようになる。
+  You will be able to create free, flexible and portable web applications.
 </p>
 <<
 <p>
-  　ためしにコマンドを実行してみましょう。次のコマンドを入力してEnterキーを押してみてください。
+  Let's execute the command as a trial. Try typing the following command and pressing Enter.
 </p>
 <pre>
 echo Hello
 </pre>
 <p>
-  　<b>echo</b>というコマンドはLinuxのコマンドで、画面に文字列を出力するためのコマンドです。以下のような出力結果が得られると思います。
+  The <b> echo </b> command is a Linux command that outputs a character string to the screen. You should get the following output result.
 </p>
 <pre>
 Hello
 </pre>
 <p>
-  　これだけだと、なんだかわかったようなわからないような気になりますね。次回は、Linuxのコマンドを、実際にいくつか実行してみて、コマンドラインでの操作に慣れてみましょう。
+  With this alone, I feel like I don't understand what it is. Next time, let's try some Linux commands to get used to the command line operation.
 </p>
 
   </div>
@@ -140,8 +137,7 @@ Hello
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

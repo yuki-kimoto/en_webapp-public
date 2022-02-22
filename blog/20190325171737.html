@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>さくらVPSで「Perl + Mojolicious」Webアプリ開発 第7回 ユーザーの作成 - Perl Web App Development Tutorial</title>
-<meta name="description" content="最終的にはWebアプリケーションを配置して、実行して、ブラウザからアクセスすると、アプリケーションにアクセスできるというとろこまでたどりつきたいと思います。">
+<title> "Perl + Mojolicious" Web application development with Sakura VPS 7th User Creation  - Perl Web App Development Tutorial</title>
+<meta name="description" content="Finally, if you place a web application, execute it, and access it from a browser, I would like to reach the point where you can access the application.">
   </head>
   <body>
     <div class="container">
@@ -53,137 +51,136 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <ol class="bread" itemscope itemtype="http://schema.org/BreadcrumbList">
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <ol class = "bread" itemscope itemtype = "http://schema.org/BreadcrumbList">
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     <a itemprop="item" href="/" class="bread-home">
-      <span itemprop="name">
-        <img src="/images/bread/home.png" alt="Mojoliciousスタートアップ">
+      <span itemprop = "name">
+        <img src = "/ images / bread / home.png" alt = "Mojolicious Startup">
       </span>
-    </a>
-    <meta itemprop="position" content="1" />
+   </a>
+    <meta itemprop = "position" content = "1" />
   </li>
-  &#8250;
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+  & # 8250;
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     here
   </li>
 </ol>
-<h2><a href="/blog/20190325171737.html">さくらVPSで「Perl + Mojolicious」Webアプリ開発 第7回 ユーザーの作成</a></h2>
+<h2><a href="/blog/20190325171737.html"> "Perl + Mojolicious" Web application development with Sakura VPS 7th User Creation </a></h2>
 <p>
-  　最終的にはWebアプリケーションを配置して、実行して、ブラウザからアクセスすると、アプリケーションにアクセスできるというとろこまでたどりつきたいと思います。
+  Finally, if you place a web application, execute it, and access it from a browser, I would like to reach the point where you can access the application.
 </p>
 <p>
-  　まず最初に行う必要のあることは、ユーザーを作成することです。現時点では次のような画面が表示されていると思います。
+  The first thing you need to do is create a user. At the moment, you should see the following screen.
 </p>
 <pre>
 #
 </pre>
 <p>
-  　このように#で行が始まっている場合は、rootユーザーで作業しているということを表しています。
+  If the line starts with # like this, it means that you are working as the root user.
 </p>
 <p>
-  　rootユーザーでWebアプリケーションを起動するというのは、絶対に避ける必要があります。なぜならroot権限というのはとても強い権限だからです。たとえば、システムファイルをすべて削除ということもできてしまいます。
+  It is absolutely necessary to avoid starting a web application as the root user. Because root privileges are very strong privileges. For example, you could delete all system files.
 </p>
 <p>
-  　ですから、Webアプリケーションはroot権限で動くのは非常に危険で、それよりもっと低い権限で動かす必要があります。
+  Therefore, it is very dangerous to run a web application with root privileges, and it is necessary to run it with lower privileges.
 </p>
 <pre>
-Webアプリケーションは、rootよりも低い権限で実行する
+Web applications run with lower privileges than root
 </pre>
 <p>
-  　ですから、Webアプリケーションを実行するためのユーザーを作りましょう。ユーザー名は何でもよいです。僕は普通はkimotoというユーザーで作っていますが、皆さんは自分の名前で作成しましょう。あるいはWebアプリ用の専用のユーザーを作ってもよいかもしれませんね。
+  So let's create a user to run the web application. The user name can be anything. I usually make it with a user named kimoto, but let's make it with your own name. Or maybe you could create a dedicated user for your web app.
 </p>
 <p>
-  　今回はwebappというユーザー名にしたいと思います。
+  This time, I would like to use the user name webapp.
 </p>
-<h3>ユーザーを作成するにはuseraddコマンドを使う</h3>
+<h3> Use the useradd command to create a user </h3>
 <p>
-  　ユーザーを作成するにはuseraddコマンドを使います。
+  Use the useradd command to create a user.
 </p>
 <pre>
 useradd webapp
 </pre>
 <p>
-  　実行すると画面には何も出力されないので、少し不安ですが大丈夫です。Unix/Linuxでは、処理が成功したときは何も表示されず、失敗したときにエラーが表示されるので、覚えて起きましょう。
+  When executed, nothing is output on the screen, so I'm a little worried, but it's okay. On Unix / Linux, nothing is displayed when the process succeeds, and an error is displayed when the process fails, so remember to wake up.
 </p>
 <pre>
-Linuxではコマンドが成功すると何も出力されないことが多い。
+On Linux, if the command is successful, nothing is often output.
 </pre>
-<h3>ユーザーにパスワードを設定するにはpasswdを使う</h3>
+<h3> Use passwd to set a password for the user </h3>
 <p>
-  　次にユーザーにパスワードを設定しましょう。ユーザーにパスワードを設定するにはpasswdを使います。
+  Next, let's set a password for the user. Use passwd to set a password for the user.
 </p>
 <pre>
-passwd ユーザー名
+passwd username
 </pre>
 <p>
-  　ですからここでは以下のように実行します。
+  Therefore, here, execute as follows.
 </p>
 <pre>
 passwd webapp
 </pre>
 <p>
-  　パスワードの入力を求められます。パスワードを入力してEnterを押します。
+  You will be asked to enter your password. Enter your password and press Enter.
 </p>
 <pre>
 Changing password for user webapp.
-New password:  
+New password: New password:
 </pre>
 <p>
-  　パスワードはなるべく長いほうが安全なので8文字以上くらいで、記号が入ったものを使いましょう。長すぎると覚えにくく、忘れやすいですし、短すぎると危険です。ここは感です。またこれもメモしておきましょう。特に最初のうちは忘れやすいですし、しばらくアクセスしないと忘れるからです。
+  The longer the password is, the safer it is, so use a password with at least 8 characters and a symbol. If it's too long, it's hard to remember and easy to forget, and if it's too short, it's dangerous. This is a feeling. Also make a note of this. It's especially easy to forget at first, and you'll forget it if you don't access it for a while.
 </p>
 <pre>
-パスワードは忘れやすいので、メモしておく。
+Make a note of the password as it is easy to forget.
 </pre>
 <p>
-  　一度目の入力が終わると、もう一度パスワードを確認のために入力を求められますので、入力しましょう。パスワードを入力してEnterを押します。
+  After completing the first entry, you will be asked to enter the password again to confirm it, so enter it. Enter your password and press Enter.
 </p>
 <pre>
 Retype new password:
 </pre>
 <p>
-  　次のようなメッセージがでると成功です。
+  It was successful when the following message appeared.
 </p>
 <pre>
 passwd: all authentication tokens updated successfully.
 </pre>
-<h3>ユーザーの変更はsuで行う</h3>
+<h3> User change is done with su </h3>
 <p>
-  　ではユーザーを作成したので、そのユーザーに変更してみましょう。ユーザーを変更するには<b>su</b>コマンドを使用します。suの後ろにハイフンがあることに注意してください。
+  Now that we have created a user, let's change it to that user. Use the <b> su </b> command to change the user. Notice that there is a hyphen behind su.
 </p>
 <pre>
-su - webapp
+su --webapp
 </pre>
 <p>
-  　これでユーザーの変更ができます。suの後ろにハイフンをつけると、元のユーザーの環境変数を受け継がないという意味になります。とりあえず、ユーザーをスイッチするときは、環境変数は受け継がないと覚えておきましょう。
+  You can now change the user. Adding a hyphen after su means that it does not inherit the environment variables of the original user. For now, when switching users, keep in mind that environment variables are not inherited.
 </p>
 <pre>
-suの後ろのハイフンは、元のユーザーの環境変数を受け継がないという意味
+The hyphen after su means that it does not inherit the environment variables of the original user
 </pre>
 <p>
-  　Tipsとしてユーザー名を指定しない場合はrootユーザーへの変更を意味します。
+  If you do not specify the user name as Tips, it means changing to the root user.
 </p>
 <pre>
-&lt;h3&gt; rootユーザーへの変更&lt;/h3&gt;
-su -
+&lt;h3&gt; Change to root user &lt;/h3&gt;
+su ---
 </pre>
 <p>
-  　通常はユーザーを変更するときは、ユーザーのパスワードを求められますが、rootユーザーから他のユーザーに変更する場合は、パスワードを求められません。
+  Normally, when changing a user, the password of the user is required, but when changing from the root user to another user, the password is not required.
 </p>
-<h3>元のユーザーに戻る</h3>
+<h3> Return to original user </h3>
 <p>
-  　元のユーザーに戻るにはexitコマンドを利用します。
+  Use the exit command to return to the original user.
 </p>
 <pre>
 exit
 </pre>
 <p>
-  　rootからwebappというユーザーに変更していた場合は、rootユーザーに戻ることができます。
+  If you changed from root to a user called webapp, you can return to the root user.
 </p>
 <p>
-  　では次回は、実際にWebアプリケーションを実行してみたいと思います。
+  Next time, I would like to actually run the web application.
 </p>
 
   </div>
@@ -211,8 +208,7 @@ exit
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

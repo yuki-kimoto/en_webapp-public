@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>PerlとMojoliciousを使ったWebシステム開発入門 - Perl Web App Development Tutorial</title>
-<meta name="description" content="Webシステム開発入門は、MojoliciousというPerlのWebフレームワークを使ったWebシステム開発の入門講座です。">
+<title> Introduction to Web system development using Perl and Mojolicious  - Perl Web App Development Tutorial</title>
+<meta name="description" content="Introduction to Web System Development  is  Mojolicious  Perl web framework.">
   </head>
   <body>
     <div class="container">
@@ -53,98 +51,97 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200302092522.html">PerlとMojoliciousを使ったWebシステム開発入門</a></h2>
+    <h2><a href="/blog/20200302092522.html"> Introduction to Web system development using Perl and Mojolicious </a></h2>
 <p>
-  <b>Webシステム開発入門</b>は、<a href="https://en.mojolicious.perlzemi.com/">Mojolicious</a>という<a href="https://en.perlzemi.com/">Perl</a>のWebフレームワークを使ったWebシステム開発の入門講座です。
+  <b> Introduction to Web System Development </b> is <a href="https://en.mojolicious.perlzemi.com/"> Mojolicious</a> <a href="https://en.perlzemi" An introductory course on web system development using the .com / "> Perl</a> web framework.
 </p>
 <p>
-  Perlには、MojoliciousというWebアプリケーションを簡単に柔軟に作れるWebフレームワークがあります。
+  Perl has a web framework called Mojolicious that makes it easy and flexible to create web applications.
 </p>
 <p>
-  Mojoliciousを使うと、開発効率とパフォーマンスを両立させたWebシステムを構築することができます。
+  With Mojolicious, you can build a web system that has both development efficiency and performance.
 </p>
-<h3>Mojoliciousの特徴</h3>
+<h3> Features of Mojolicious </h3>
 <p>
-  Mojoliciousの特徴
+  Features of Mojolicious
 </p>
-<h4>組み込みの開発用サーバー</h4>
+<h4> Embedded development server </h4>
 <p>
-  Mojoliciousは、Linux環境で起動できる開発用Webサーバーを持っています。開発用Webサーバーを使うと、Webアプリケーションをローカルの環境で実行できるので、開発作業を早く繰り返すことができ、開発効率を高めます。
+  Mojolicious has a development web server that can be booted in a Linux environment. With a development web server, you can run your web application in a local environment, so you can repeat your development work faster and improve your development efficiency.
 </p>
-<h4>プリフォーク+非同期I/Oの本番用サーバー</h4>
+<h4> Prefork + asynchronous I / O production server </h4>
 <p>
-  Mojoliciousは、Linux環境で起動できるパフォーマンスに最適化された本番用のWebサーバーを持っています。プリフォーク+非同期I/Oで、本番サーバーを起動します。
-</p>
-<p>
-  子プロセスをプリフォークすることによって、あらかじめHTTPリクエストが来るのに備えます。プリフォークでは、並列にリクエストを待つことができます。
+  Mojolicious has a performance-optimized production web server that can be booted in a Linux environment. Start the production server with prefork + asynchronous I / O.
 </p>
 <p>
-  それぞの子プロセスが非同期I/Oで、HTTPリクエストを受け取ります。非同期I/Oは、同時接続が1万をこえても、アーキテクチャーが耐える、スケーラブルな実装です。
-</p>
-<h4>ホットデプロイメント</h4>
-<p>
-  ホットデプロイメントは、本番サーバーで、サーバーを完全に止めることなく、サーバーを再起動するための技術です。HTTPリクエストの喪失が起こらないように、サーバーは再起動されます。
-</p>
-<h4>テンプレート</h4>
-<p>
-  Mojoliciousは、HTMLの出力に使うテンプレートを持っています。テンプレートの中で、Perlのコードを使って、動的に出力することが可能です。
-</p>
-<h4>JSONサポート</h4>
-<p>
-  MojoliciousのAPIは、JSONをサポートしています。AJAXでのJSONの受け取りや、JSONの描画も簡単です。
-</p>
-<h4>Web層に機能が限定</h4>
-<p>
-  MojoliciousはWeb層に機能が限定されたWebフレームワークです。データベースへアクセスは、Webフレームワークの機能として含んでいません。
+  By pre-forking the child process, we prepare for HTTP requests in advance. Prefolk allows you to wait for requests in parallel.
 </p>
 <p>
-  データベースアクセスモジュール(例:<a href="https://dbix-en.custom.perlzemi.com/">DBIx::Custom</a>)は自由に選んで使えます。
+  Each child process is asynchronous I / O and receives an HTTP request. Asynchronous I / O is a scalable implementation that the architecture can withstand over 10,000 simultaneous connections.
 </p>
-<h4>非同期I/OのHTTPクライアント</h4>
+<h4> Hot deployment </h4>
 <p>
-  Mojoliciousは、非同期I/OのHTTPクライアントを含んでいます。外部サービスにHTTPリクエストを投げる場合に、ブロッキングすることなくHTTPリクエストを送信できます。
+  Hot deployment is a technology for restarting a production server without shutting it down completely. The server will be restarted to prevent loss of HTTP requests.
 </p>
-<h4>小さなWebアプリ</h4>
+<h4> Template </h4>
 <p>
-  Mojolicious::Liteと呼ばれるMojoliciousに含まれているモジュールを使うと、3行で、Webアプリを作成できます。
+  Mojolicious has a template to use for HTML output. It is possible to output dynamically using Perl code in the template.
+</p>
+<h4> JSON support </h4>
+<p>
+  Mojolicious's API supports JSON. It's easy to receive JSON with AJAX and draw JSON.
+</p>
+<h4> Functions are limited to the Web layer </h4>
+<p>
+  Mojolicious is a web framework with limited functionality at the web tier. Accessing the database is not included as a feature of the web framework.
+</p>
+<p>
+  You are free to choose and use the database access module (eg <a href="https://dbix-en.custom.perlzemi.com/"> DBIx::Custom</a>).
+</p>
+<h4> Asynchronous I / O HTTP client </h4>
+<p>
+  Mojolicious contains an HTTP client for asynchronous I / O. When throwing an HTTP request to an external service, you can send the HTTP request without blocking.
+</p>
+<h4> Small web app </h4>
+<p>
+  A module included with Mojolicious called Mojolicious::Lite allows you to create a web app in three lines.
 </p>
 <pre>
 use Mojolicious::Lite;
-get '/' =&gt; sub { shift-&gt;render(text =&gt; 'Hello') };
+get'/' =&gt; sub {shift-&gt;render(text =&gt;'Hello')};
 app-&gt;start;
 </pre>
 <p>
-  これは、画面にHelloと表示する一番小さなWebアプリケーションです。
+  This is the smallest web application that displays Hello on the screen.
 </p>
-<h4>互換性は高く、セキュリティ的にも安全</h4>
+<h4> High compatibility and security security </h4>
 <p>
-  Mojoliciousは、継続的にメンテナンスされており、セキュリティ問題が発生すると、すぐに修正されます。時々、互換性を壊れることがありますが、原則的には後方互換性は高く、アップグレードも簡単です。Perl自体も後方互換性が非常に高いです。
+  Mojolicious is continuously maintained and will be fixed as soon as a security issue arises. Sometimes it breaks compatibility, but in principle it's backwards compatible and easy to upgrade. Perl itself is also very backwards compatible.
 </p>
-<h4>PerlのGCと相性が良い</h3>
+<h4> Good compatibility with Perl's GC </h3>
 <p>
-  Perlは、リファレンスカウントGCと呼ばれる平均応答速度に最適化されたGCを持っています。
-</p>
-<p>
-  これは、Mojoliciousの非同期I/OのWebサーバーと相性が良いです。
+  Perl has a GC optimized for average response speed called reference counting GC.
 </p>
 <p>
-  非同期I/Oでは、平均待ち時間が小さいことが、パフォーマンスをよくするために非常に重要ですが、Perlは、平均応答速度に最適化されています。
-</p>
-<h3>Perl&MojoliciousでWebシステム開発を始めませんか?</h3>
-<p>
-  Perl&MojoliciousでWebシステム開発を始めまてみませんか?
+  This works well with Mojolicious's asynchronous I / O web server.
 </p>
 <p>
-  PerlとMojoliciousの組み合わせは、Webシステム開発ととても相性が良いです。
+  For asynchronous I / O, low average latency is very important for good performance, but Perl is optimized for average response speed.
+</p>
+<h3> Would you like to start web system development with Perl & Mojolicious? </H3>
+<p>
+  Want to start web system development with Perl & Mojolicious?
 </p>
 <p>
-  簡潔な記述で高い開発効率、プリフォーク+非同期I/Oによる高い実行性能。
+  The combination of Perl and Mojolicious goes very well with web system development.
 </p>
 <p>
-  他の手法とぜひ比較してみてください。
+  High development efficiency with a concise description, high execution performance by prefork + asynchronous I / O.
+</p>
+<p>
+  Please compare it with other methods.
 </p>
 
   </div>
@@ -172,8 +169,7 @@ app-&gt;start;
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

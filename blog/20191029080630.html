@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>ログイン機能を使ったユーザー認証の作り方 - 会員登録機能の実装(削除予定) - Perl Web App Development Tutorial</title>
-<meta name="description" content="(このページは書きかけです。最終的に、コンテンツは複数のページに分割されます。内容は不正確です。2020/05/05)">
+<title> How to create user authentication using login function --Implementation of member registration function (planned to be deleted)  - Perl Web App Development Tutorial</title>
+<meta name="description" content="(This page is about to be written. Eventually, the content will be split into multiple pages. The content is inaccurate. 2020/05/05)">
   </head>
   <body>
     <div class="container">
@@ -53,180 +51,179 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <ol class="bread" itemscope itemtype="http://schema.org/BreadcrumbList">
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <ol class = "bread" itemscope itemtype = "http://schema.org/BreadcrumbList">
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     <a itemprop="item" href="/" class="bread-home">
-      <span itemprop="name">
-        <img src="/images/bread/home.png" alt="Mojoliciousスタートアップ">
+      <span itemprop = "name">
+        <img src = "/ images / bread / home.png" alt = "Mojolicious Startup">
       </span>
-    </a>
-    <meta itemprop="position" content="1" />
+   </a>
+    <meta itemprop = "position" content = "1" />
   </li>
-  &#8250;
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+  & # 8250;
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     here
   </li>
 </ol>
-<h2><a href="/blog/20191029080630.html">ログイン機能を使ったユーザー認証の作り方 - 会員登録機能の実装(削除予定)</a></h2>
+<h2><a href="/blog/20191029080630.html"> How to create user authentication using login function --Implementation of member registration function (planned to be deleted) </a></h2>
 <p>
-  (このページは書きかけです。最終的に、コンテンツは複数のページに分割されます。内容は不正確です。2020/05/05)
+  (This page is about to be written. Eventually, the content will be split into multiple pages. The content is inaccurate. 2020/05/05)
 </p>
 <p>
-  ログイン機能を使ったユーザー認証の作り方について書きます。Webアプリケーションで会員登録の機能を使って、ユーザー認証をするのって、難しそうだなと感じていませんか。どうやって会員登録機能とログイン機能を作ったらよいかわからない、そういう方の疑問を解決できる記事を書きます。
+  I will write about how to create user authentication using the login function. Do you find it difficult to authenticate users using the membership registration function in a web application? I will write an article that can solve the question of those who do not know how to create a member registration function and a login function.
 </p>
 <p>
-  記事を書いた後に、Webサービスのスタートアップに必要な、MojoliciousとMySQLにおける会員登録機能とログイン機能を使った、ユーザー認証のサンプルコードを書いてみますね。
+  After writing the article, I will write a sample code for user authentication using the membership registration function and login function in Mojolicious and MySQL, which is necessary for Web service startup.
 </p>
 <p>
-  この記事を読めば、セキュリティの専門家から見ても、だいじょうぶといえるような、セキュリティ的にも安心の会員登録とログイン機能を、手順を覚えれば実装できるようになります。
+  After reading this article, you will be able to implement a security-friendly membership registration and login function that can be said to be okay for security experts if you learn the procedure.
 </p>
 <p>
-  (この記事は、2019年におけるもっともよいやり方を試行錯誤しながら書いていますので、検証が必要です。)
+  (This article is a trial-and-error writing of the best way to do it in 2019, so it needs to be verified.)
 </p>
 <p>
-  (記事執筆途中。追加、修正あり。実際の全体の検証は未。最終更新2019年11月14日)
+  (In the middle of writing the article. There are additions and corrections. The actual overall verification has not been done. Last updated November 14, 2019)
 </p>
-<h3>ログイン機能を使ったユーザー認証とは何か</h3>
+<h3> What is user authentication using the login function? </H3>
 <p>
-  ログイン機能を使ったユーザー認証とは何かについて解説していきます。
+  I will explain what user authentication is using the login function.
 </p>
-<h4>ユーザー認証とは何か</h4>
+<h4> What is user authentication? </H4>
 <p>
-  ユーザー認証とは、ユーザーを識別する機能のことを言います。木本さんが操作している、田中さんが操作しているなど、どのユーザーが今操作しているかを識別するための機能です。
+  User authentication is the ability to identify a user. It is a function to identify which user is currently operating, such as Mr. Kimoto's operation or Mr. Tanaka's operation.
 </p>
-<h4>ログイン機能とは何か</h4>
+<h4> What is the login function </h4>
 <p>
-  一般的に、Webアプリケーションでは、ユーザーIDとパスワード、あるいは、メールアドレスとパスワードを指定して、ログイン機能を使って、ユーザー認証を実装します。この記事では、この機能のことをログイン機能と呼びます。
-</p>
-<p>
-  ユーザー認証には、ベーシック認証や、OAuthなどの別の認証方式もあるので、アプリケーションで実装するユーザー認証機能をログイン機能という名前で呼ぶことにします。
+  Generally, in a web application, a user ID and password, or an email address and password are specified, and the login function is used to implement user authentication. In this article, this feature is referred to as the login feature.
 </p>
 <p>
-  広くよく見られるログイン画面からログインする機能のことです。
-</p>
-<h4>ユーザーID</h4>
-<p>
-  ユーザーIDは「kimoto_yuki01」のように英数字の場合もあれば「0012345」のように数字だけのものもあります。どちらの場合も同じロジックで処理できます。
+  Since there are other authentication methods such as basic authentication and OAuth for user authentication, we will call the user authentication function implemented in the application by the name of login function.
 </p>
 <p>
-  英数字の場合はASCIIコードの「a-zA-Z0-9_」だけに限定しておくようにすればよいかと思います。
+  It is a function to log in from the login screen that is often seen widely.
+</p>
+<h4> User ID </h4>
+<p>
+  The user ID may be alphanumerical, such as "kimoto_yuki01", or it may be just a number, such as "0012345". Both cases can be handled with the same logic.
 </p>
 <p>
-  ユーザーIDは、ユーザーが決めることができるようにすることもできますし、サービス提供側が決めることができるようにすることもできます。
+  In the case of alphanumericals, I think it should be limited to the ASCII code "a-zA-Z0-9_".
 </p>
 <p>
-  ユーザーIDまたは、メールアドレスは、一意であることが必要です。ユニーク制約を設定します。
+  The user ID can be determined by the user or by the service provider.
 </p>
 <p>
-  ユーザーIDを使ってユーザー認証を行う場合は、ユーザーのメールアドレスの変更を行うことができるのは、当然ですが、メールアドレスを使ってユーザー認証を作った場合でも、メールアドレスの変更は可能ですので、安心してください。ユーザーテーブルを作るときに、行を一意に識別できるIDの列を作成して、プライマリーキー制約とオートインクリメントを設定します。
-</p>
-<h4>パスワードの安全性</h4>
-<p>
-  パスワードは、ASCIIコードの見ることが可能な文字で表現します。「a-zA-Z0-9」とASCIIの記号「&@」など。キーボードで打てる文字で、文字の制限を行うと考えてください。
+  The user ID or email address must be unique. Set a unique constraint.
 </p>
 <p>
-  セキュリティを高めるために、文字数は、8文字以上と制約を書けると安全です。パスワードは長ければ長いほど安全ですが、利便性もあるので、安全性について、パスワードを決める画面で、ユーザーが知ることができると、親切です。
+  When user authentication is performed using a user ID, it is natural that the user's email address can be changed, but even if the user authentication is created using the email address, the email address can be changed. So don't worry. When you create a user table, create a column of IDs that uniquely identifies the row and set the primary key constraint and auto-increment.
+</p>
+<h4> Password security </h4>
+<p>
+  The password is represented by the visible characters of the ASCII code. "A-zA-Z0-9" and ASCII symbol "& @" etc. Think of it as limiting the characters you can type on the keyboard.
 </p>
 <p>
-  英語と数字と記号のすべてが入っているというのも、少しだけ安全性を上げるでしょう。
+  To increase security, it is safe to write a constraint that the number of characters is 8 or more. The longer the password, the more secure it is, but it is also convenient, so it would be nice if the user could know about the security on the password decision screen.
 </p>
 <p>
-  パスワードは、ユーザーテーブルに、そのまま保存しては、絶対にいけません。ユーザーデータが流出すると、そのパスワードをそのまま入力することで、他のサービスにログインできる危険性があるからです。そんなことは、当然だと、思うかもしれませんが、僕はパスワードが生で保存されているテーブルを実際に目にしてきました。
+  The fact that it contains all of English, numbers and symbols will also make it a little safer.
 </p>
 <p>
-  パスワードは、ハッシュ関数を使って、その値を保存します。ハッシュ関数を使うと、元のパスワードが、どんな文字列であったのかを、知ることができません。もう少し、正確に言うと、知ることがほぼ不可能になります。ソルトと呼ばれる値を、付け加えておくと、より安全性が高まります。これについては、後で、詳しく解説します。
-</p>
-<h4>HTTP通信とユーザー認証</h4>
-<p>
-  Webの標準的なプロトコルであるHTTP通信は、ステートレスであることが前提です。ステートレスとは、状態を持たないことで、HTTPリクエストがあって、HTTPレスポンスを返すというのがひとつの処理で、それぞれのHTTPリクエストが独立しています。
+  The password should never be stored in the user table as it is. If user data is leaked, there is a risk that you can log in to other services by entering the password as it is. You might take it for granted, but I've actually seen a table with raw passwords.
 </p>
 <p>
-  HTTP自体は、接続を持続するという機能を持っていません。(HTTP 2.0のことはこの記事では触れません)。
+  The password uses a hash function to store its value. If you use a hash function, you won't know what the original password was. To be more precise, it's almost impossible to know. Adding a value called salt makes it even more secure. We'll talk more about this later.
+</p>
+<h4> HTTP communication and user authentication </h4>
+<p>
+  HTTP communication, which is a standard protocol for the Web, is assumed to be stateless. Stateless means that there is no state, there is an HTTP request, and an HTTP response is returned, which is one process, and each HTTP request is independent.
 </p>
 <p>
-  ベーシック認証や、ダイジェスト認証が定義されていますが、これは、HTTP通信上の認証なので、アプリケーションに統合することができません。
+  HTTP itself does not have the ability to sustain a connection. (HTTP 2.0 is not mentioned in this article).
 </p>
 <p>
-  結局のところ、ユーザーにサービスを提供するためのユーザー認証は、アプリケーション側で、行う必要があるということです。
+  Basic authentication and digest authentication are defined, but they are authentication over HTTP communication and cannot be integrated into the application.
 </p>
 <p>
-  HTTPは、クッキーと呼ばれる、クライアント側にデータを保存する機能を持っています。このクッキーの機能をうまく使って、ユーザー認証を実装することになります。
+  After all, user authentication to service a user must be done on the application side.
 </p>
 <p>
-  ログインのタイミングで、セッションIDと呼ばれるものを、アプリケーション側で発行して、それを、クッキーに保存してもらいます。そして、クッキーに保存されたセッションIDを、送信してもらい、アプリケーション側で、ユーザーを識別します。
-</p>
-<h3>パスワードをどのように保存するか</h3>
-<p>
-  ログイン機能を使ったユーザー認証を作る場合は、ユーザーがパスワードを入力します。このパスワードを盗まれても安全なように保存しておく必要があります。
+  HTTP has a function called a cookie that stores data on the client side. You will make good use of this cookie feature to implement user authentication.
 </p>
 <p>
-  パスワードそのままを保存した場合は、サーバーで作業している人は、データベースでSQLを実行して、ユーザーIDとパスワードをそのまま見ることができます。これは、セキュリティ上よろしくありません。
+  At the time of login, the application issues a session ID and asks it to be saved in a cookie. Then, the session ID stored in the cookie is sent, and the application side identifies the user.
+</p>
+<h3> How to save password </h3>
+<p>
+  When creating user authentication using the login function, the user enters the password. You must save this password so that it is safe to be stolen.
 </p>
 <p>
-  ですので、パスワードをそのまま保存するのではなく、パスワードにハッシュ関数を実行した値を保存しておくことになります。
+  If you save the password as-is, anyone working on the server can run the SQL in the database and see the user ID and password as-is. This is not good for security.
 </p>
-<h4>ハッシュ関数とは</h4>
 <p>
-  ハッシュ関数とは、ある値を与えたときに、ひとつの値を出力する関数です。
+  Therefore, instead of saving the password as it is, the value obtained by executing the hash function is saved in the password.
+</p>
+<h4> What is a hash function? </H4>
+<p>
+  A hash function is a function that outputs one value when a certain value is given.
 </p>
 <pre>
-# ハッシュ関数
-my $hash_value = hash_func($value);
+#Hash function
+my $hash_value = hash_func ($value);
 </pre>
 <p>
-  「えっ、これがハッシュ関数」なのと言われると、これがハッシュ関数なのだというしかありません。すごく難しいと信じ込んでいた方は、びっくりされるでしょう。
+  When people say, "Well, this is a hash function," it's just that it's a hash function. Those who believed it was very difficult would be surprised.
 </p>
 <p>
-  ただし、良いハッシュ関数と悪いハッシュ関数があり、良いハッシュ関数を選ぶ必要があるのです。
+  However, there are good hash functions and bad hash functions, and you have to choose a good hash function.
 </p>
 <p>
-  良いといわれるハッシュ関数の条件は以下です。
+  The conditions for a hash function that is said to be good are as follows.
 </p>
 <ul>
-  <li>ハッシュ値から元の値を推測されないこと</li>
-  <li>異なる入力に対して、出力されるハッシュ値がなるべく重複しないこと</li>
+  <li> Don't guess the original value from the hash value </li>
+  <li> For different inputs, the output hash values ​​should be as unique as possible </li>
 </ul>
 <p>
-  元の値を推測されるということは、パスワードが知られてしまうということです。パスワードが簡単に知られてしまうようでは、困りますね。ですので、良いハッシュ関数は、元の値を推測されにくいということが必要です。
+  Guessing the original value means that the password will be known. It would be a problem if the password was easily known. So a good hash function needs to be hard to guess the original value.
 </p>
 <p>
-  パスワードの場合は、ハッシュ値が重複しないことは、あまり必要な要件ではありませんが、ハッシュ値を、ユニークIDとして扱いたい場合は、異なる入力に対して、出力されるハッシュ値がなるべく重複しないということが重要です。これは、後ほど、セッションIDを作成する上で、必要になりますので、頭に入れておいてください。
+  In the case of password, it is not a necessary requirement that the hash value is duplicated, but if you want to treat the hash value as a unique ID, the hash value output is not duplicated as much as possible for different inputs. Is important. Keep this in mind as you will need it later to create the session ID.
 </p>
 <p>
-  ちなみに、ハッシュ関数は、Perlのハッシュとは何の関係もありません。
+  By the way, hash functions have nothing to do with Perl hashes.
 </p>
-<h4>bcryptでパスワードをハッシュ化する</h4>
+<h4> Hash password with bcrypt </h4>
 <p>
-  2019年の調査の結果、パスワードをハッシュ化するには、bcryptが良いようです。PHP 7では、bcryptのアルゴリズムが、デフォルトで採用されています。
-</p>
-<p>
-  bcryptは、入力値が短くても(パスワードは短い)、元の値を推測するのに、ある程度の計算時間がかかるハッシュ関数のアルゴリズムのようです。
+  As a result of the 2019 survey, bcrypt seems to be a good way to hash passwords. PHP 7 uses the bcrypt algorithm by default.
 </p>
 <p>
-  Perlにおけるbcryptの実装は<a href="https://metacpan.org/pod/release/ZEFRAM/Crypt-Eksblowfish-0.009/lib/Crypt/Eksblowfish.pm">Crypt::Eksblowfish::Bcrypt</a>で利用できます。
+  bcrypt seems to be a hash function algorithm that takes some computational time to guess the original value, even if the input value is short (password is short).
 </p>
 <p>
-  Mojoliciousでは、プラグインとして<a href="https://metacpan.org/pod/release/MINIMAL/Mojolicious-Plugin-Bcrypt-0.14/lib/Mojolicious/Plugin/Bcrypt.pm">Mojolicious::Plugin::Bcrypt</a>があります。
+  The implementation of bcrypt in Perl is <a href="https://metacpan.org/pod/release/ZEFRAM/Crypt-Eksblowfish-0.009/lib/Crypt/Eksblowfish.pm"> Crypt::Eksblowfish::Bcrypt </a Available at>.
+</p>
+<p>
+  In Mojolicious, as a plugin <a href="https://metacpan.org/pod/release/MINIMAL/Mojolicious-Plugin-Bcrypt-0.14/lib/Mojolicious/Plugin/Bcrypt.pm"> Mojolicious::Plugin::There is Bcrypt</a>.
 </p>
 <pre>
-# 登録時にハッシュ化されたパスワードを作る
+#Create a hashed password when registering
 sub signup {
     my $c = shift;
-    my $crypted_pass = $c-&gt;bcrypt( $self-&gt;param('password') );
+    my $encrypted_pass = $c-&gt;bcrypt($self-&gt;param('password'));
     ...
 }
 
-# ログイン時にパスワードをチェック
+#Check password when logging in
 sub login {
     my $self = shift;
     my $entered_pass = $self-&gt;param('password');
-    my $crypted_pass = $self-&gt;get_password_from_db();
-    if ( $c-&gt;bcrypt_validate( $entered_pass, $crypted_pass ) ) {
+    my $encrypted_pass = $self-&gt;get_password_from_db();
+    if ($c-&gt;bcrypt_validate($entered_pass, $encrypted_pass)) {
  
-        # Authenticated
+        #Authenticated
         ...;
     }
     else {
@@ -237,58 +234,58 @@ sub login {
 }
 </pre>
 <p>
-  bcryptで生成されたハッシュ化されたパスワードを、ユーザーテーブルのパスワードに保存しましょう。
+  Save the hashed password generated by bcrypt in your user table password.
 </p>
 <p>
-  将来的にさらに強度の高いアルゴリズムがでてきた場合のために、bcryptを自作のpassword_hash関数で、bcrypt_validateを自作のpassword_validate関数で、ラッピングしておくと、保守性が高くなるかもしれませんね。
+  In case a stronger algorithm comes out in the future, bcrypt is a self-made password_hash function, bcrypt_validIf you wrap ate with your own password_validate function, maintainability may be improved.
 </p>
 <p>
-  Mojolicious以外の場合は、Mojolicious::Plugin::Bcryptのソースコードは、Mojoliciousに依存していなくて、とても簡単なので、コピペして利用できそうです。
+  Other than Mojolicious, the source code of Mojolicious::Plugin::Bcrypt does not depend on Mojolicious and is very easy, so it seems that you can copy and use it.
 </p>
-<h3>セッションIDを生成する方法</h3>
+<h3> How to generate a session ID </h3>
 <p>
-  ユーザー認証において、少し難しいのは、初回のログイン以外は、セッションIDを使って、ユーザーを識別するということです。
+  A little difficult in user authentication is to use the session ID to identify the user, except for the first login.
 </p>
 <p>
-  ログイン画面から、ログインをするときは、ユーザーIDとパスワードを使ってユーザーを認証するのですが、認証後は、セッションIDを使ってユーザーを識別します。
+  When logging in from the login screen, the user is authenticated using the user ID and password, but after authentication, the session ID is used to identify the user.
 </p>
-<h4>セッションIDとは</h4>
+<h4> What is a session ID? </H4>
 <p>
-  セッションIDとは、ユーザーを識別するための文字の並びのことです。セッションIDのサンプルを書いてみます。
+  A session ID is a sequence of characters that identifies a user. Let's write a sample session ID.
 </p>
 <pre>
-# セッションIDのサンプル
+#Session ID sample
 aabc73ce3
 deab33cea
 a567c73c1
 </pre>
 <p>
-  本物のセッションIDはもっと長い方がよいのですが、ここでは雰囲気だけ。16進数の文字を並べていますが、「a-z」「A-Z」「0-9」などのランダムな文字の並びで構いません。
+  The real session ID should be longer, but here it's just the atmosphere. Hexadecimal characters are arranged, but random characters such as "a-z", "A-Z", and "0-9" can be used.
 </p>
-<h4>セッションIDは一意性が高く、十分に長くなければならない</h4>
+<h4> Session ID must be unique and long enough </h4>
 <p>
-  セッションIDは、単なる文字列の並びですが、ユーザー識別に利用するために、いくつかの要件を満たしている必要があります。
-</p>
-<p>
-  ユーザー識別には、まずそのユーザーを識別できるということが求められます。
+  The session ID is just a string sequence, but it must meet some requirements in order to be used for user identification.
 </p>
 <p>
-  たとえば、ユーザーが1万人いるとしたら、セッションIDが5000人分しかないと、困りますね。
+  User identification first requires the ability to identify the user.
 </p>
 <p>
-  また、セッションIDを発行したときに、他のユーザーと重なってしまったというのも困りますね。
+  For example, if you have 10,000 users, you're in trouble if you only have 5,000 session IDs.
 </p>
 <p>
-  またセッションIDが短ければ、推測される可能性も高まります。セキュリティ的にも、文字の種類が多く、長い方がよいのです。
+  Also, when you issue the session ID, it's also a problem that it overlaps with other users.
 </p>
 <p>
-  セッションIDは単なるランダムな文字列の並びで良いのですが、一意性を確保したい場合に、衝突が起こるのが極めて小さいハッシュ関数を使うのが簡単です。
+  Also, the shorter the session ID, the more likely it is to be guessed. In terms of security, it is better to have many types of characters and long ones.
 </p>
 <p>
-  ハッシュ関数で生成する場合は、文字種は「0-9a-z」の16文字ですので、なるべく文字の長さが長くなるようにするのが安全です。
+  The session ID can be just a random string sequence, but if you want to ensure uniqueness, it's easy to use a hash function that has very few collisions.
 </p>
 <p>
-  SHA-1で40文字、SHA-256で64文字、SHA-512で128文字です。
+  When generating with a hash function, the character type is 16 characters of "0-9a-z", so it is safe to make the character length as long as possible.
+</p>
+<p>
+  SHA-1 has 40 characters, SHA-256 has 64 characters, and SHA-512 has 128 characters.
 </p>
 <pre>
 SHA-1
@@ -301,435 +298,435 @@ SHA-512
 4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a
 </pre>
 <p>
-  セッションIDは、ユーザーが覚える必要がないので長くしても大丈夫です。
+  The session ID can be long as it does not need to be remembered by the user.
 </p>
-<h4>セッションIDは、ユーザーを識別し、永続的ではなく、推測されにくい必要がある</h4>
+<h4> Session ID should identify the user, be non-persistent, and difficult to guess </h4>
 <p>
-  セッションIDを作成する場合に、ハッシュ関数を使うのですが、入力を何にするかということは、考える必要があります。
-</p>
-<p>
-  もし、ユーザー名にすれば、簡単に推測されてしまいそうです。この場合、ユーザー名とハッシュ関数の種類がわかれば、出力がわかるわけですね。
+  I use a hash function when creating a session ID, but I have to think about what the input should be.
 </p>
 <p>
-  また、セッションIDが永続的に変わらないということにもなってしまします。セッションIDは、期限が来ると無効になる必要があるわけです。
+  If you use a user name, it's easy to guess. In this case, if you know the user name and the type of hash function, you can see the output.
 </p>
 <p>
-  時刻の情報を、ユーザー名の末尾に、付け足しましょう。こうすると永続性はなくなります。ユーザー名に対して一意ということもありません。
+  It also means that the session ID will not change permanently. The session ID needs to be invalidated when the deadline is reached.
 </p>
 <p>
-  これで、十分でしょうか? まぁ、心配はなさそう? でも、もう少しセッションIDを強くしましょう。
+  Add the time information to the end of your username. This will make it non-persistent. It is not unique to a user name.
 </p>
 <p>
-  ユーザー名と時刻というのは、ランダムな情報ではないですよね。攻撃者は、ユーザー名と時刻とハッシュ関数がわかれば、突破できます。
+  Is this enough? Well, don't worry? But let's make the session ID a little stronger.
 </p>
 <p>
-  そこで、ランダムな数字というのを、末尾に付け足してあげます。100万くらいにしておきましょうか。
+  The user name and time are not random information, aren't they? An attacker can break through if he knows the username, time, and hash function.
 </p>
 <p>
-  100万以下のランダムな数字を付け加える。
+  Therefore, I will add a random number to the end. Shall I keep it around 1 million?
 </p>
 <p>
-  ですので、上記を踏まえて、セッションIDを生成してみましょう。ユーザー名と時刻とランダムな数をSHA-512のアルゴリズムのハッシュ関数に与えています。
+  Add a random number of 1 million or less.
+</p>
+<p>
+  So, based on the above, let's generate a session ID. The user name, time and random number are given to the hash function of the SHA-512 algorithm.
 </p>
 <pre>
 use strict;
 use warnings;
 
-use Digest::SHA 'sha512_hex';
+use Digest::SHA'sha512_hex';
 
-# セッションIDを作成
-my $user_id = 'kimoto';
+#Create session ID
+my $user_id ='kimoto';
 my $time = time;
 my $rand = int rand 1_000_000;
-my $session_id = sha512_hex($user_id . $time . $rand);
+my $session_id = sha512_hex ($user_id. $time. $rand);
 print "$session_id\n";
 </pre>
 <p>
-  出力されたセッションIDの例
+  Example of output session ID
 </p>
 <pre>
 e182aa93605c82a472c4986f2749b111f35042f2bb01a3ba9eba3603653cf5ca4d9eb540f1ae32eb4c8d280f18ccb4d5f58f614652c067c7c3175e9b58d29d1a
 </pre>
 <p>
-  ちなみにMojoliciousのセッション機能は、セッションIDを生成する方法とは何の関係もないので注意してください。Mojoliciousのセッションは、セッションIDを保存するのに利用できます。
+  By the way, please note that Mojolicious's session function has nothing to do with how to generate a session ID. Mojolicious sessions can be used to store session IDs.
 </p>
 <pre>
 $c-&gt;session(session_id =&gt; $session_id);
 </pre>
-<h3>セッションIDをどこに保存するか</h3>
+<h3> Where to store the session ID </h3>
 <p>
-  セッションIDはログインのタイミングで発行しますが、これをどこに保存しておくのでしょうか?
+  The session ID will be issued at the time of login, but where should I save it?
 </p>
 <p>
-  セッションIDは二か所に保存しておく必要があります。それは、クライアントのクッキーと、サーバー側のユーザーのIDに紐づけられた場所、たとえばユーザーテーブルに保存します。
+  The session ID should be stored in two places. It stores the client cookie and the location associated with the server-side user's ID, for example in the user table.
 </p>
-<h3>セッションIDをクライアントのクッキーに保存</h3>
+<h3> Save session ID in client cookie </h3>
 <p>
-  クライアントは、クッキーに保存されたセッションIDをサーバーに送信することで、ユーザー認証をしてもらいます。セッションIDの期限が切れていなければ、あなたであるということが、サーバー側で分かるという仕組みです。
-</p>
-<p>
-  Mojoliciousでは、セッションという機能を使って、セッションIDを保存できます。Mojoliciousのセッションは、この記事で書かれている、セッションIDとは何の関係もないので注意してください。
+  The client authenticates the user by sending the session ID stored in the cookie to the server. If the session ID has not expired, the server will know that you are.
 </p>
 <p>
-  Mojoliciousのセッションは、クッキーをより安全に利用できるようにした機能だと考えておくのがよいでしょう。電子署名が付いているので、改ざんされた場合に、検知できるという機能がクッキーに追加されたというものです。
+  Mojolicious allows you to save your session ID using a feature called Sessions. Please note that Mojolicious sessions have nothing to do with the session ID described in this article.
 </p>
 <p>
-  暗号化はされていませんので、ユーザーを識別できるような情報、たとえば、ユーザーIDやパスワードを保存しておくのに適していません。解読は簡単で、もし生のパスワードを保存したとすれば、クッキーを盗まれたときに、わかってしまいます。
+  It's a good idea to think of Mojolicious sessions as a feature that makes cookies more secure. Since it has an electronic signature, a function has been added to the cookie that it can detect if it has been tampered with.
 </p>
 <p>
-  Mojoliciousのセッション(署名付きクッキー)に、セッションIDを保存します。これは、ユーザーがログインしたタイミングで、一度だけ行います。
+  It is not encrypted and is not suitable for storing user-identifiable information, such as user IDs and passwords. It's easy to crack, and if you save your raw password, it will be known when your cookie is stolen.
+</p>
+<p>
+  Store the session ID in a Mojolicious session (signed cookie). This is done only once when the user logs in.
 </p>
 <pre>
-Mojoliciousのセッション(署名付きクッキー)にセッションIDを保存
+Store session ID in Mojolicious session (signed cookie)
 $c-&gt;session(session_id =&gt; $session_id);
 </pre>
 <p>
-  Mojoliciousではない場合も、フレームワークのクッキーに保存する機能を利用すれば、同じです。
+  Even if it's not Mojolicious, it's the same if you take advantage of the framework's ability to store cookies.
 </p>
-<h3>セッションIDをサーバー側のユーザーIDが紐づけられた場所に保存</h3>
+<h3> Save the session ID in the location associated with the user ID on the server side </h3>
 <p>
-  セッションIDを保存する場所は、サーバー側であれば、ユーザーIDと紐づけることができれば、どこでも構いません。メモリであったり、ファイルであったり、リレーショナルデータベース(MySQL, PostgreSQL)であったり、揮発性のキーバリューストアー(Redis, memcached)であったりします。
-</p>
-<p>
-  メモリである場合は、サーバーが、フォークしている場合対応できません。ファイルであった場合は、アプリケーションサーバーが、並列に並んでいるときは対応できません。リレーショナルデータベースは、データべースへのアクセスがあります。揮発性のキーバリューストアーは、リレーショナルデータベースよりは速いですが、サーバーをインストールし、利用するコストがあります。
+  The session ID can be saved anywhere on the server side as long as it can be linked with the user ID. It can be a memory, a file, a relational database (MySQL, PostgreSQL), or a volatile key-value store (Redis, memcached).
 </p>
 <p>
-  Mojoliciousスタートアップは、Webの新規開発がPerlでできるようになるサイトですので、複雑性を避けて応用が利きやすいように、リレーショナルデータベースを使った方法を紹介します。
+  If it is memory, it cannot be handled if the server is forking. If it is a file, it cannot be handled when the application servers are lined up in parallel. Relational databases have access to the database. Volatile key-value stores are faster than relational databases, but at the cost of installing and using a server.
 </p>
 <p>
-  基本的な考え方がわかれば、他の方法にすることができると思います。
+  Mojolicious Startup is a site that enables new development of the Web with Perl, so I will show you how to use a relational database to avoid complexity and make it easy to apply.
 </p>
 <p>
-  この記事では、MySQLとPerlのDBIをサンプルにして、紹介しますね。
+  If you understand the basic idea, you can use other methods.
 </p>
-<h4>セッション管理のためのユーザーテーブル定義</h4>
 <p>
-  ユーザーテーブルは以下のようにします。MySQLの設定でデータベースはInnoDBで、文字コードがutf8mb4であるとします。必ずInnoDBをデフォルトのテーブルのエンジンとして、設定してください。InnoDBは行ロックの機能を持っており、テーブル全体をロックしません。
+  In this article, I will introduce you using MySQL and Perl DBI as samples.
+</p>
+<h4> User table definition for session management </h4>
+<p>
+  The user table looks like this: Suppose the database is InnoDB and the character code is utf8mb4 in the MySQL settings. Be sure to set InnoDB as the default table engine. InnoDB has a row lock feature and does not lock the entire table.
 </p>
 <pre>
 create table user (
   id int primary_key auto_increment,
-  code varchar(150) not null default '',
-  name varchar(150) not null default '',
-  mail varchar(150) not null default '',
-  session_id varchar(150),
+  code varchar (150) not null default'',
+  name varchar (150) not null default'',
+  mail varchar (150) not null default'',
+  session_id varchar (150),
   session_expiration bigint not null default 0,
-  temp_regist_id varchar(150),
+  temp_regist_id varchar (150),
   temp_regist_expiration bigint not null default 0,
   authenticated tiny int default 0,
-  unique(code),
-  unique(mail),
-  unique(session_id),
-  unique(temp_regist_id)
+  unique (code),
+  unique (mail),
+  unique (session_id),
+  unique (temp_regist_id)
 );
 </pre>
 <p>
-  主要な点は、セッションに関する部分ですが、どのような考えに基づいて、このユーザーテーブルなのかを簡潔に書きます。
+  The main point is about the session, but I'll briefly describe what this user table is based on.
 </p>
 <p>
-  データベースのテーブル名とフィールド名の命名規則は<a href="/blog/20191113074356.html">データベースのテーブル名とフィールド名の命名規約</a>に基づいて記述しています。
+  Database table and field name naming conventions are based on <a href="/blog/20191113074356.html"> database table and field name naming conventions</a>.
 </p>
 <p>
-  ユーザーIDが、int型でauto_incrementであるのは、ユーザーは、登録されるデータだからです。列を一意に識別できるIDを持たせています。CODEというのはkimotoのような、ユーザーIDと呼ばれているものです。IDは行を識別する情報として利用しているので、ユーザーIDはCODEに保存しています。
+  The user ID is int type and auto_increment because the user is the registered data. It has an ID that can uniquely identify the column. CODE is what is called a user ID, such as kimoto. Since the ID is used as information to identify the row, the user ID is stored in CODE.
 </p>
 <p>
-  MAILはメールアドレスで、会員登録する場合は、メールを送信して、本人確認をするので、必要です。メールアドレスは重複がないようにユニーク制約をつけています。
+  MAIL is an e-mail address, and if you want to register as a member, you will need to send an e-mail to verify your identity. E-mail addresses have unique restrictions so that they are not duplicated.
 </p>
 <p>
-  mysqlでは、varchar(150)というのは、varcharは255までであれば、どの長さにしても、保存サイズも変わらないということで、なるべく大きな150という値にしています。
+  In mysql, varchar (150) is set to 150 as large as possible because the storage size does not change regardless of the length of varchar up to 255.
 </p>
 <p>
-  mysqlには、古いMySQLの場合、utf8mb4を指定した場合は、インデックスが191の長さまでしか効かないという仕様がありますので、環境依存の落とし穴にはまらないように、191より小さく覚えやすい150にしています。
+  mysql has an old MIn the case of ySQL, when utf8mb4 is specified, there is a specification that the index works only up to the length of 191.
 </p>
 <p>
-  not null制約は、nullを許可しなければならない絶対的な必要性がない限りは、つけておきます。アプリケーションのロジックにおいて、NULLを排除しておいた方が、判定が簡単だからです。
+  Not null constraints should be in place unless there is an absolute need to allow nulls. This is because it is easier to judge if NULL is excluded in the application logic.
 </p>
 <p>
-  さてここからがセッションのお話です。セッションIDは、ユニークでなければならないので、ユニーク制約をつけます。ただし、not null制約はつけません。会員登録した段階では、セッションIDが存在しないからです。クッキーに保存されているセッションIDがわかれば、ユーザーテーブルを検索して、どのユーザーからのアクセスなのかを判定できます。
+  Now, here is the story of the session. The session ID must be unique, so put a unique constraint on it. However, it does not have a not null constraint. This is because the session ID does not exist at the stage of membership registration. Knowing the session ID stored in the cookie allows you to search the user table to determine which user is accessing it.
 </p>
 <p>
-  セッションは有効期限を持ちますが、bigintで、64bit整数型で保存しておくと2019年問題をクリアできます。datetime型ではない理由は、セッションIDのチェックのたびに、日付の変換のロジックを書かなくてもよいという理由です。セッションは、ユーザーがどのページにアクセスした場合にも、チェックする必要がありますから、なるべくパフォーマンスが良い方がよいのです。
+  The session has an expiration date, but if you save it as a 64-bit integer type with bigint, you can clear the 2019 problem. The reason it is not datetime type is that you don't have to write the logic for date conversion every time you check the session ID. Sessions need to be checked no matter which page the user visits, so it's best to have the best possible performance.
 </p>
 <p>
-  ユーザーが増えてきて、セッションのチェックによる、アプリケーションサーバーのコストが判明したタイミングが、保存先をリレーショナルデータベースから、揮発性のキーバリューストアに、切り替えるタイミングかと思われます。
+  It seems that the time when the number of users is increasing and the cost of the application server is found by checking the session is the time to switch the storage destination from the relational database to the volatile key-value store.
 </p>
-<h4>セッションIDの保存</h4>
+<h4> Save session ID </h4>
 <p>
-  セッションIDは、ログインしたタイミングで発行しますが、このタイミングで、ユーザーテーブルのセッションに保存しましょう。セッションの有効期間は、2週間とします。セッションIDは「セッションIDを生成する方法」で解説したセッションIDです。サンプルでは、DBIの例外処理は、書いていませんが、実際は、書いてください。
+  The session ID will be issued when you log in, but let's save it in the session of the user table at this time. The session is valid for 2 weeks. The session ID is the session ID explained in "How to generate a session ID". In the sample, DBI exception handling is not written, but in fact, please write it.
 </p>
 <pre>
-# セッションを保存。期限は二週間後。
+#Save session. The deadline is two weeks later.
 my $two_week_seconds = (60 * 60 * 24 * 14);
 my $session_expiration = time + $two_week_seconds;
-my $sth = $dbi-&gt;prepare('update user set session_id = ?, session_expiration = ?');
+my $sth = $dbi-&gt;prepare('update user set session_id =?, session_expiration =?');
 $sth-&gt;execute($session_id, $session_expiration);
 </pre>
 <p>
-  もし、セッションIDにはユニーク制約がついているので、重複した場合は、この処理は失敗しますが、重複する確率が非常に小さいようにセッションIDを作っていますので、重複する確率は、天文学的に小さくなるでしょう。
+  If the session ID has a unique constraint, if it overlaps, this process will fail, but since the session ID is created so that the probability of duplication is very small, the probability of duplication is astronomical. Will be smaller.
 </p>
 <p>
-  絶対に起こらないようにしたい場合は、失敗した場合に、セッションIDを発行して、処理を繰り返しましょう。
+  If you want to prevent it from happening, issue a session ID and repeat the process if it fails.
 </p>
-<h4>セッションの確認</h4>
+<h4> Session confirmation </h4>
 <p>
-  ユーザーがログインしている場合は、クッキーにセッションIDが保存されています。クッキーに保存されているセッションIDを、データベースに保存されているユーザーIDと比較しましょう。
-</p>
-<p>
-  セッションIDが一致することと、有効期限が切れていないことを確認しましょう。
+  If the user is logged in, the session ID is stored in the cookie. Compare the session ID stored in the cookie with the user ID stored in the database.
 </p>
 <p>
-  MojoliciousとDBIによるコードのサンプルです。
+  Make sure the session IDs match and that they haven't expired.
+</p>
+<p>
+  A sample code from Mojolicious and DBI.
 </p>
 <pre>
-# クッキーからセッションIDを取得
+# Get session ID from cookie
 my $cookie_session_id = $c-&gt;session('session_id');
 
-# 現在時刻を取得
+# Get the current time
 my $cur_time = time;
 
-# セッションが一致して、有効期限が切れていない、ユーザー情報を取得
-my $sth = $dbi-&gt;prepare('select id, session_expiration from user where session_id = ?, session_expiration &lt; ?');
+#Get user information with matching sessions and not expired
+my $sth = $dbi-&gt;prepare('select id, session_expiration from user where session_id =?, session_expiration &lt;?');
 $sth-&gt;execute($cookie_session_id, $cur_time);
 my $user = $sth-&gt;fetchrow_hashref;
 $sth-&gt;finish;
 
-# もしなければ、認証失敗
+#If not, authentication failed
 unless ($user) {
-  # 認証失敗した場合の処理を書く
+  # Write the processing when authentication fails
 }
 
-# ユーザーIDを取得
+#Get user ID
 my $user_id = $user-&gt;{ID};
 
-# 現在のセッションの有効期限を取得
+# Get the expiration date of the current session
 my $user_session_expiration = $user-&gt;{SESSION_EXPIRATION};
 </pre>
 <p>
-  セッションが確認できれば、だれがログインしているがわかりますね。必要な情報はユーザーIDだけですが、セッションの有効期限の更新で利用するために、セッションの有効期限も取得しています。
+  If you can see the session, you know who is logged in. All you need is your user ID, but you also have a session expiration date to use for updating your session expiration date.
 </p>
-<h4>セッションの有効期限の更新</h4>
+<h4> Update session expiration date </h4>
 <p>
-  ユーザーがログインを継続的に行っている間は、セッションを更新しましょう。最終ログインの日時から、2週間ログインがなかった場合に、セッションが切れるという実装にしてみましょう。
-</p>
-<p>
-  ここでひとつ考えておく必要があるのは、updateによる更新処理は、selectよりも負荷が高いということです。selectは、スケールアウトしやすのですが、updateはマスターのデータベースを必ず更新しなければならないため、スケールアウトしにくいのです。また、update処理が行われる場合は、MySQLのInnoDBでは、対象の行がロックされます。
+  Let's update the session while the user is continuously logged in. Let's implement the session to expire if there is no login for 2 weeks from the date and time of the last login.
 </p>
 <p>
-  updateは、スケールアウトしにくいということと、行にロックがかかるという点が、selectとは異なるということを、覚えておきましょう。
+  One thing to keep in mind here is that the update process by update is more expensive than select. Select is easy to scale out, but update is hard to scale out because it always has to update the master database. Also, when the update process is performed, the target row is locked in InnoDB of MySQL.
 </p>
 <p>
-  ですので、アクセスがあるたびに、セッションの有効期限を更新という処理は書きたくないですね。ここでは、1日に1回だけセッションの有効期限を更新するというロジックにしてみましょう。
+  Keep in mind that update is different from select in that it's hard to scale out and it locks rows.
 </p>
 <p>
-  DBIを使ったサンプルです。変数名は、上記のサンプルから引きついだものもあります。
+  Therefore, I don't want to write the process of updating the session expiration date every time there is access. Here, let's use the logic of updating the session expiration date only once a day.
+</p>
+<p>
+  This is a sample using DBI. Some variable names are derived from the sample above.
 </p>
 <pre>
-# 新しい有効期限は、現在から2週間後に設定
+#New expiration date set 2 weeks after now
 my $new_user_session_expiration = $cur_time + $two_week_seconds;
 
-# 1日の秒数
+# Seconds of the day
 my $one_day_seconds = 60 * 60 * 24;
 
-# 有効期限が1日以内に更新されていない場合に、更新する
-if ($new_user_session_expiration &gt; $user_session_expiration + $one_day_seconds) {
-  my $sth = $dbi-&gt;prepare('update user set session_expiration = ? from user where id = ?');
+#Renew if the expiration date has not been renewed within 1 day
+if ($new_user_session_expiration&gt; $user_session_expiration + $one_day_seconds) {
+  my $sth = $dbi-&gt;prepare('update user set session_expiration =? from user where id =?');
   $sth-&gt;execute($new_user_session_expiration, $user_id);
 }
 </pre>
-<h3>会員登録機能の実装</h3>
+<h3> Implementation of membership registration function </h3>
 <p>
-  ユーザー認証によるログイン機能には、会員登録機能が必要です。会員登録機能を実装するにあたって、知っておく必要のある知識をまず解説します。
+  The member registration function is required for the login function by user authentication. First, I will explain what you need to know to implement the membership registration function.
 </p>
-<h4>メールアドレスによる本人認証</h4>
+<h4> Identity verification by email address </h4>
 <p>
-  この記事では、一般的な方法であるメールアドレスによる本人認証を使って、新規会員登録を行います。
-</p>
-<p>
-  メールアドレスによる本人認証とは、メールアドレスはその人が所有しているので、メールを見ることができるのは、その人だけだということを根拠にした本人認証です。
+  In this article, we will register as a new member using the common method of personal authentication using an email address.
 </p>
 <p>
-  メールのパスワードが漏洩してしまうと、それで終わりなので、最近は、電話番号などの、二重認証などが、大手のサイトなどで採用されていますよね。スタートアップするWebサイトは、メールアドレスによる本人認証から始めましょう。
+  Identity verification by email address is identity verification based on the fact that the email address is owned by that person and only that person can see the email.
 </p>
-<h4>会員登録画面に必要なユーザー情報</h4>
 <p>
-  会員登録画面に最低限必要なユーザー情報は、以下です。
+  If the password of the e-mail is leaked, that's all, so recently, double authentication such as phone numbers has been adopted by major sites. Start up your website by verifying your identity with your email address.
+</p>
+<h4> User information required for membership registration screen </h4>
+<p>
+  The minimum user information required for the member registration screen is as follows.
 </p>
 <ul>
-  <li>ユーザーID(メールアドレスをユーザーIDにする場合は不要)</li>
-  <li>メールアドレス</li>
-  <li>パスワード</li>
+  <li> User ID (not required if email address is user ID) </li>
+  <li> Email address </li>
+  <li> password </li>
 </ul>
 <p>
-  ユーザーIDを作成する場合は、ユーザーIDとメールアドレスとパスワードです。メールアドレスをユーザーIDにする場合は、メールアドレスとパスワードです。メールアドレスをユーザーIDにした場合でも、ユーザーの希望による、メールアドレスの変更は、可能ですので、安心してください。
+  If you create a user ID, it is your user ID, email address, and password. If your email address is your user ID, it's your email address and password. Even if you use your e-mail address as your user ID, you can change your e-mail address if you wish, so don't worry.
 </p>
 <p>
-  以下の記事では、ユーザーIDを作成するという前提で、記事を書いていきます。
+  In the following articles, I will write articles on the assumption that I will create a user ID.
 </p>
 <p>
-  ビジネスの種類によっては「氏名」「住所」「電話番号」なども入力してもらうとよいでしょう。
+  Depending on the type of business, it may be advisable to enter "name", "address", "phone number", etc.
 </p>
-<h4>ユーザーテーブルの作成</h4>
+<h4> Create user table </h4>
 <p>
-  ユーザーIDとメールアドレスの対応は、1対1であって、ユーザーIDは一意で、メールアドレスも一意である必要があります。アプリケーションでチェックを行うことは、必要ですが、データの整合性が完全に取れているということが大切ですですので、ユーザーテーブルは、以下のように作成します。
-</p>
-<p>
-  これは上記「セッション管理のためのユーザーテーブル定義」で解説したものと同じです。IDは、行を一意に定義するもので、ユーザーIDではなく、整数が入ります。CODEにkimotoのようなユーザーIDが入ります。
+  The correspondence between the user ID and the email address must be one-to-one, the user ID must be unique, and the email address must be unique. It is necessary to check in the application, but it is important that the data is completely consistent, so create the user table as follows.
 </p>
 <p>
-  またメールアドレスによる本人認証は、本人にメールアドレスを送信して、送信された仮登録IDを使ったリンクからアクセスしてもらうことで行います。そこで、ユーザーテーブルには、仮登録ID「TEMP_REGIST_ID」と仮登録の有効期限「TEMP_REGIST_EXPIRATION」を持たせています。
+  This is the same as described in "User Table Definition for Session Management" above. The ID uniquely defines the row and contains an integer, not the user ID. A user ID such as kimoto is entered in CODE.
 </p>
 <p>
-  mysqlによるユーザーテーブルの作成例です。
+  In addition, personal authentication by e-mail address is performed by sending the e-mail address to the person and having them access from the link using the sent temporary registration ID. Therefore, the user table has a temporary registration ID "TEMP_REGIST_ID" and a temporary registration expiration date "TEMP_REGIST_EXPIRATION".
+</p>
+<p>
+  This is an example of creating a user table with mysql.
 </p>
 <pre>
 create table user (
   id int primary_key auto_increment,
-  code varchar(150) not null default '',
-  password_hash varchar(150) not null default '',
-  name varchar(150) not null default '',
-  mail varchar(150) not null default '',
-  session_id varchar(150),
+  code varchar (150) not null default'',
+  password_hash varchar (150) not null default'',
+  name varchar (150) not null default'',
+  mail varchar (150) not null default'',
+  session_id varchar (150),
   session_expiration bigint not null default 0,
-  temp_regist_id varchar(150),
+  temp_regist_id varchar (150),
   temp_regist_expiration bigint not null default 0,
   authenticated tiny int default 0,
-  unique(code),
-  unique(mail),
-  unique(session_id),
-  unique(temp_regist_id)
+  unique (code),
+  unique (mail),
+  unique (session_id),
+  unique (temp_regist_id)
 );
 </pre>
-<h4>会員登録画面の作成</h4>
+<h4> Creating a member registration screen </h4>
 <p>
-  会員登録画面には、ユーザーIDとメールアドレスとパスワードを指定してもらう必要があります。
+  On the member registration screen, you need to specify your user ID, email address, and password.
 </p>
 <p>
-  Mojoliciousのサンプルを使った会員登録画面の例です。フォーム送信する場合はPOSTメソッドを使います。actionは、自分自身のURLを指定して、メソッドはPOSTで、オペレーションとして「temp-regist」を指定して、分岐できるようにしています。
+  This is an example of a member registration screen using a Mojolicious sample. Use the POST method to submit the form. action specifies its own URL, the method is POST, and "temp-regist" is specified as the operation so that it can branch.
 </p>
 <p>
-  hidden_fieldは隠しフィールドを作成するMojoliciousの関数です。text_field、password_fieldも同じです。Mojoliciousのフォームヘルパーは、バリデーションで値が間違っていた場合など、そのページに戻らなければならなかった場合に、値を自動で復元してくれるという機能があります。
+  hidden_field is a Mojolicious function that creates a hidden field. The same applies to text_field and password_field. Mojolicious's form helper will take the value itself if you have to return to the page, such as if the value was incorrect in validation.There is a function to restore it by motion.
 </p>
 <pre>
-&lt;div class="login-form"&gt;
-  &lt;form action="&lt;% url_for %&gt;" method="POST"&gt;
+&lt;div class = "login-form"&gt;
+  &lt;form action = "&lt;%url_for%&gt;" method = "POST"&gt;
     &lt;div&gt;
-      &lt;%= hidden_field op =&gt; 'temp-regist' %&gt;
+      &lt;%= hidden_field op =&gt;'temp-regist'%&gt;
     &lt;/div&gt;
     &lt;div&gt;
-      ユーザーID
-      &lt;%= text_field 'user-id' %&gt;
+      User ID
+      &lt;%= text_field'user-id'%&gt;
     &lt;/div&gt;
     &lt;div&gt;
-      メールアドレス
-      &lt;%= text_field 'mail' %&gt;
+      email address
+      &lt;%= text_field'mail'%&gt;
     &lt;/div&gt;
     &lt;div&gt;
-      パスワード
-      &lt;%= password_field 'password' %&gt;
+      password
+      &lt;%= password_field'password'%&gt;
     &lt;/div&gt;
     &lt;div&gt;
-      &lt;input type="submit" value="送信"&gt;
+      &lt;input type = "submit" value = "submit"&gt;
     &lt;/div&gt;
   &lt;/form&gt;
 &lt;/div&gt;
 </pre>
-<h4>ユーザーIDが正しいものかを確認</h4>
+<h4> Check if the user ID is correct </h4>
 <p>
-  ユーザーIDが正しいものであることを確認しましょう。ユーザーIDが正しいものというのは以下のことをいいます。
+  Make sure your user ID is correct. The correct user ID means the following.
 </p>
 <ul>
-  <li>ユーザーIDを構成する文字(この例では、英数字とアンダーバー)の1文字以上で構成されていること</li>
-  <li>ユーザーIDが、すでに存在するユーザーIDと重複しないこと</li>
-  <li>メールアドレスが、認証済みのすでに存在するメールアドレスと重複しないこと</li>
-  <li>ユーザーIDの長さがデータベースのCODE列の長さに収まること</li>
+  <li> Consists of at least one of the characters that make up the user ID (alphanumers and underscores in this example) </li>
+  <li> The user ID does not overlap with an existing user ID </li>
+  <li> The email address does not overlap with an already authenticated email address </li>
+  <li> The length of the user ID fits in the length of the CODE column in the database </li>
 </ul>
 <p>
-  ユーザーIDは、一意でなければならないので、これをチェックするために、データベースにアクセスする必要があることに注意しましょう。
+  Note that the user ID must be unique, so you need to access the database to check this.
 </p>
 <p>
-  ではMojoliciousとDBIで、サンプルを書いてみましょう。正しくない場合は、エラー情報に追加するようにしています。
+  Let's write a sample with Mojolicious and DBI. If it is not correct, I try to add it to the error information.
 </p>
 <pre>
-# エラー情報
+#Error information
 my $errors = {};
 
-my $user_id = param('user-id');
+my $user_id = param ('user-id');
 
-# ユーザーIDを構成する文字をチェック
-if ($user_id =~ /^[a-zA-Z0-9_]+$/) {
+#Check the characters that make up the user ID
+if ($user_id = ~ / ^ [a-zA-Z0-9_] + $/) {
 
-  # ユーザーIDの長さをチェック
+  #Check the length of the user ID
   my $max_user_id_length = 100;
-  if (length $user_id &gt; $max_user_id_length) {
-    $errors-&gt;{user_id} = 'ユーザーIDは100文字以内で作成してください。';
+  if (length $user_id&gt; $max_user_id_length) {
+    $errors-&gt;{user_id} ='Create the user ID within 100 characters. ';
   }
   else {
 
-    # ユーザーIDが重複していないことをチェック
-    my $sth = $dbi-&gt;prepare('select code from user where code = ?');
+    #Check that the user ID is not duplicated
+    my $sth = $dbi-&gt;prepare('select code from user where code =?');
     $sth-&gt;execute($user_id);
     my $user = $sth-&gt;fetchrow_hashref;
     $sth-&gt;finish;
     if ($user) {
-      $errors-&gt;{user_id} = 'すでに存在するユーザーです。';
+      $errors-&gt;{user_id} ='Already exists user. ';
     }
     else {
-      # メールアドレスが重複していないことをチェック
-      my $sth = $dbi-&gt;prepare('select mail from user where mail = ? and authenticated = 1');
+      #Check that the email address is not duplicated
+      my $sth = $dbi-&gt;prepare('select mail from user where mail =? and authenticated = 1');
       $sth-&gt;execute($mail);
       my $user = $sth-&gt;fetchrow_hashref;
       $sth-&gt;finish;
       if ($user) {
-        $errors-&gt;{user_id} = 'すでに登録されているメールアドレスです。';
+        $errors-&gt;{user_id} ='Email address already registered. ';
       }
     }
   }
 }
 else {
-  $errors-&gt;{user_id} = 'ユーザーIDは「a-zA-Z0-9_」の1文字以上で作成してください。';
+  $errors-&gt;{user_id} ='Create the user ID with at least one character of "a-zA-Z0-9_". ';
 }
 </pre>
 <p>
-  ユーザーIDは「a-zA-Z0-9_」の一文字以上で構成しますが、このチェックはPerlの正規表現を使って行っています。
+  The user ID consists of one or more characters of "a-zA-Z0-9_", but this check is done using Perl regular expressions.
 </p>
 <p>
-  ユーザーIDの長さのチェックは、CODEの長さが150文字なので、きりのよいところで100にしています。100文字あれば、十分でしょう。
+  The length of the user ID is checked because the length of CODE is 150 characters, so I set it to 100 in a clear place. 100 characters should be enough.
 </p>
 <p>
-  データベースにアクセスしてユーザーに重複がないことを確認しています。
+  I'm accessing the database to make sure the users are unique.
 </p>
 <p>
-  エラー情報は、ハッシュリファレンスに保存しています。こうしておくと、個々のエラーメッセージを取り出したり、エラーメッセージだけを配列として取り出すことが可能になります。
+  Error information is stored in the hash reference. This allows you to retrieve individual error messages or just the error messages as an array.
 </p>
-<h4>パスワードが有効なものであるかを確認</h4>
+<h4> Check if the password is valid </h4>
 <p>
-  次はパスワードのチェックです。有効なパスワードとして以下のことを定義します。
+  Next is the password check. Define the following as a valid password:
 </p>
 <ul>
-  <li>パスワードはASCIIコードのグラフィック文字の8文字以上で構成される</li>
+  <li> Password consists of 8 or more ASCII code graphic characters </li>
 </ul>
 <p>
-  ASCIIコードのグラフィック文字とは、ASCIIコード印字文字から空白を除いたものです。パスワードには空白を許可しませんが、キーボードで打てる英数字と記号を許可します。
+  ASCII code graphic characters are ASCII code printed characters without spaces. Passwords do not allow blanks, but allow alphanumericals and symbols that you can type on the keyboard.
 </p>
 <p>
-  このグループとして適切なものが、ASCIIコードのグラフィック文字です。
+  ASCII code graphic characters are appropriate for this group.
 </p>
 <pre>
-# 印字文字の一覧。これから空白を除いたものがグラフィック文字。
-  @ `
+# List of printed characters. Graphic characters are the ones without spaces.
+  @`
 ! A a
-" B b
-# C c
-$ D d
-% E e
+"B b
+#C c
+$D d
+%E e
 &amp; F f
-' G g
-( H h
+'G g
+(H h
 ) I i
 * J j
 + K k
 , L l
-- M m
+--M m
 . N n
 / O o
 0 P p
@@ -743,116 +740,116 @@ $ D d
 8 X x
 9 Y y
 : Z z
-; [ {
-&lt; \ |
-= ] }
+; [{{
+&lt;\ |
+=]}
 &gt; ^ ~
-? _    
+? _
 </pre>
 <p>
-  パスワードは、短すぎると総当たりでログインされる危険性が高いので、8文字以上とします。
+  If the password is too short, there is a high risk that you will be logged in in a round-robin manner, so use at least 8 characters.
 </p>
 <p>
-  パスワードの長さによって、安全性がわかるUIであれば、より親切でしょう。
+  It would be more kind if the UI can be secured by the length of the password.
 </p>
 <p>
-  パスワードは、ユーザーテーブルのPASSWORD_HASHに平文で保存されるわけではなくbcryptによって、ハッシュ化されたものが保存されるので、最大長のチェックはなくても大丈夫です。
+  The password is not stored in clear text in PASSWORD_HASH of the user table, but the hashed one is stored by bcrypt, so you do not need to check the maximum length.
 </p>
 <p>
-  ではMojoliciousで、サンプルを書いてみましょう。
+  Let's write a sample with Mojolicious.
 </p>
 <pre>
-my $password = param('password');
+my $password = param ('password');
 
-# パスワードがASCIIのグラフィック文字の8文字以上であることを確認
-unless ($password =~ /^\p{PosixGraph}{8,}$/) {
-  $errors-&gt;{password} = 'パスワードは、英数字、記号の8文字以上で指定してください。';
+# Make sure the password is at least 8 ASCII graphic characters
+unless ($password = ~ / ^ \ p {PosixGraph} {8,} $/) {
+  $errors-&gt;{password} ='Specify the password with at least 8 alphanumerical characters and symbols. ';
 }
 </pre>
 <p>
-  「\p{PosixGraph}」は、ASCIIコードのグラフィック文字を表現する正規表現の文字クラスです。量指定子を組み合わせて、グラフィック文字の8文字以上であることを確認しています。
+  "\ P {PosixGraph}" is a regular expression character class that represents ASCII code graphic characters. By combining quantifiers, we have confirmed that the number of graphic characters is 8 or more.
 </p>
-<h4>パスワードのハッシュ化</h4>
+<h4> Password hashing </h4>
 <p>
-  パスワードはbcryptを使ってハッシュ化します。
+  Passwords are hashed using bcrypt.
 </p>
 <pre>
-# パスワードのハッシュ化
+# Password hashing
 my $password_hash = $c-&gt;bcrypt($password);
 </pre>
-<h4>メールアドレスのチェック</h4>
+<h4> Check your email address </h4>
 <p>
-  メールアドレスのチェックは、厳密にやることはあまり意味がないような気もします。なぜなら、メールアドレスは、実際にユーザーに到達するまで、正しいかどうかがわからないからです。
+  I don't think it makes much sense to check your email address strictly. That's because you don't know if your email address is correct until you actually reach the user.
 </p>
 <p>
-  ここではメールアドレスのチェックとして「@」が入っていることをユーザーのために確認する程度にとどめておきたいと思います。
+  Here, I would like to keep it to the extent that it confirms for the user that "@" is included as a check of the email address.
 </p>
 <pre>
-my $mail = param('mail');
+my $mail = param ('mail');
 
-# メールアドレスに@が入っていることを確認
-unless ($mail =~ /\@/) {
-  $errors-&gt;{mail} = 'メールアドレスを正しく入力してください。';
+# Make sure your email address contains @
+unless ($mail = ~ / \ @/) {
+  $errors-&gt;{mail} ='Please enter your email address correctly. ';
 }
 </pre>
-<h4>ユーザーデータの保存と仮登録IDの発行</h4>
+<h4> Saving user data and issuing temporary registration ID </h4>
 <p>
-  チェックしたユーザーデータをデータベースに保存します。このとき同時に仮登録に利用する一時的な仮登録IDを、発行して、データベースに保存します。
+  Save the checked user data in the database. At the same time, a temporary temporary registration ID used for temporary registration is issued and saved in the database.
 </p>
 <p>
-  仮登録IDは、セッションIDの生成方法と同じでよいですが、メールの本文の折り返しでリンクを正しくクリックできなくなるという不安がありますので、Outlookの既定の折り返し文字数の76文字以内で生成しておくことにします。SHA1で生成して、長さは40文字です。
+  The temporary registration ID can be generated in the same way as the session ID generation method, but there is a concern that the link cannot be clicked correctly due to the wrapping of the body of the email, so generate it within the default wrapping character number of 76 characters in Outlook. I will decide. Generated with SHA1, it is 40 characters long.
 </p>
 <pre>
-# 仮登録IDを作成
+#Create a temporary registration ID
 my $time = time;
 my $rand = int rand 1_000_000;
-my $temp_regist_id = sha1_hex($user_id . $time . $rand);
+my $temp_regist_id = sha1_hex ($user_id. $Time. $rand);
 </pre>
 <p>
-  生成される仮登録IDの例
+  Example of generated temporary registration ID
 </p>
 <pre>
 e182aa93605c82a472c4986f2749b111f35042f2
 </pre>
 <p>
-  次に仮登録IDの有効期間を作成します。有効期間は24時間とします。
+  Next, create a valid period for the temporary registration ID. The validity period is 24 hours.
 </p>
 <pre>
-# 仮登録IDの有効期間は、24時間後。
+#The temporary registration ID is valid after 24 hours.
 my $one_day_seconds = (60 * 60 * 24);
 my $temp_regist_expiration = time + $one_day_seconds;
 </pre>
-<!--
+<!-
 <p>
-  では、ユーザー情報と仮登録ID、仮登録有効期限をユーザーテーブルに保存しましょう。このとき一つ注意しなければならないのは、仮登録しているユーザーが、もう一度仮登録を行ったときの処理を書いておく必要があるということです。
+  Now, let's save the user information, temporary registration ID, and temporary registration expiration date in the user table. One thing to note at this time is that it is necessary to write down the processing when the temporary registration user performs the temporary registration again.
 </p>
 <pre>
-# ユーザー情報、仮登録ID、仮登録有効期限をユーザーテーブルに保存
-my $sth = $dbi-&gt;prepare('insert into user (set cdoe = ?, password_hash = ?, mail = ?, temp_regist_id = ?, temp_regist_expiration = ?');
+#Save user information, temporary registration ID, temporary registration expiration date in the user table
+my $sth = $dbi-&gt;prepare('insert into user (set cdoe =?, password_hash =?, mail =?, temp_regist_id =?, temp_regist_expiration =?');
 $sth-&gt;execute($user_id, $password_hash, $temp_regist_id, $temp_regist_expirasession_id, $temp_regist_expiration);
 </pre>
 <p>
-  -->
+  ->
 </p>
-<h3>注意事項</h3>
+<h3> Notes </h3>
 <p>
-  サンプルに関する注意。DBIとあるのは、実際に利用する場合は、DBIx::ConnectorかDBIx::Handlerと読み変えてください。Web開発でDBIを使う場合は、接続管理をしてくれるモジュールが必要になるからです。
-</p>
-<p>
-  簡易的に書くために、データベースの処理に関しては、例外処理を行っていないので注意してください。実際に書く場合は、例外処理を追加するか、例外処理を自動で行ってくれるO/Rマッパーを利用してください。
-</p>
-<h3>検討事項</h3>
-<p>
-  ユーザーテーブル、仮登録ユーザーテーブル、ユーザー認証テーブルに分けた方がよいかも。
+  A note about the sample. DBI should be read as DBIx::Connector or DBIx::Handler when actually using it. This is because when using DBI for web development, you need a module that manages connections.
 </p>
 <p>
-  セキュリティの専門家の方に聞きたいこと。
+  For the sake of simplicity, please note that exception handling is not performed for database processing. When actually writing, add exception handling or use the O / R mapper that handles exception handling automatically.
+</p>
+<h3> Consideration </h3>
+<p>
+  It may be better to divide it into a user table, a temporary registration user table, and a user authentication table.
 </p>
 <p>
-  パスワード認証は、bcryptでよいか?
+  I would like to ask a security expert.
 </p>
 <p>
-  セッションIDがSHA-512の場合に、128文字になるが、不具合がでてくる事象はないか?
+  Can password authentication be bcrypt?
+</p>
+<p>
+  If the session ID is SHA-512, it will be 128 characters, but is there any problem?
 </p>
 
   </div>
@@ -880,8 +877,7 @@ $sth-&gt;execute($user_id, $password_hash, $temp_regist_id, $temp_regist_expiras
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

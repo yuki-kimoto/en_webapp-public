@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>会員登録フォームの作成 - Perl Web App Development Tutorial</title>
-<meta name="description" content="会員登録フォームを作成します。Webシステム開発入門では、メールアドレスがユーザーIDになる会員登録の実装方法を解説します。">
+<title> Creating a membership registration form  - Perl Web App Development Tutorial</title>
+<meta name="description" content="Create a membership registration form. In the introduction to Web system development, we will explain how to implement member registration where the email address becomes the user ID.">
   </head>
   <body>
     <div class="container">
@@ -53,134 +51,133 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200107082558.html">会員登録フォームの作成</a></h2>
+    <h2><a href="/blog/20200107082558.html"> Creating a membership registration form </a></h2>
 <p>
-  会員登録フォームを作成します。Webシステム開発入門では、メールアドレスがユーザーIDになる会員登録の実装方法を解説します。
+  Create a membership registration form. In the introduction to Web system development, we will explain how to implement member registration where the email address becomes the user ID.
 </p>
 <p>
-  <img src="/images/acount/new_acount_form.png">
+  <img src = "/ images / account / new_acount_form.png">
 </p>
-<h3>会員登録のユーザー情報</h3>
+<h3> Member registration user information </h3>
 <p>
-  会員登録に最低限必要なものは以下です。
+  The minimum required items for membership registration are as follows.
 </p>
 <ul>
-  <li>メールアドレス</li>
-  <li>パスワード</li>
+  <li> Email address </li>
+  <li> password </li>
 </ul>
 <p>
-  メールアドレスが、ユーザーを一意に識別するためのユーザーIDになります。メールアドレスはユーザー認証に利用されます。ユーザーのメールアドレスは、ユーザー本人しか受信できないと想定できるので、ユーザー認証に利用できます。
+  Your email address will be your user ID to uniquely identify you. The email address will be used for user authentication. Since it can be assumed that the user's email address can only be received by the user himself / herself, it can be used for user authentication.
 </p>
-<h3>会員登録フォームの作成</h3>
+<h3> Creating a membership registration form </h3>
 <p>
-  会員登録フォームを作成してみましょう。「templates/signup.html.ep」に作成してください。
+  Let's create a membership registration form. Create it in "templates / signup.html.ep".
 </p>
 <pre>
-&lt;div class="signup"&gt;
-  &lt;form action="&lt;%= url_for %&gt;" method="POST"&gt;
-    &lt;div class="signup-title"&gt;新規アカウントを作成&lt;/div&gt;
-    &lt;%= text_field 'mail', placeholder =&gt; 'メールアドレス' %&gt;
-    &lt;%= password_field 'password', placeholder =&gt; 'パスワード' %&gt;
-    &lt;%= submit_button 'アカウント登録' %&gt;
-    &lt;%= hidden_field 'op' =&gt; 'register' %&gt;
+&lt;div class = "signup"&gt;
+  &lt;form action = "&lt;%= url_for%&gt;" method = "POST"&gt;
+    &lt;div class = "signup-title"&gt; Create a new account &lt;/div&gt;
+    &lt;%= text_field'mail', placeholder =&gt;'email address'%&gt;
+    &lt;%= password_field'password', placeholder =&gt;'password'%&gt;
+    &lt;%= submit_button'Account registration'%&gt;
+    &lt;%= hidden_field'op'=&gt;'register'%&gt;
   &lt;/form&gt;
 &lt;/div&gt;
 </pre>
-<h4>タグヘルパー</h4>
+<h4> Tag helper </h4>
 <p>
-  「text_field」「password_field」というのは、<a href="https://en.mojodoc.perlzemi.com/Mojolicious::Plugin::TagHelpers.html">Mojoliciousのタグヘルパー</a>です。text_fieldは、自動的にフォームに値を復元してくれるので便利です。たとえば、フォームの内容に間違いがあった場合に、同じ画面を表示することになりますが、このときに、値を自動的に復元してくれるのです。
+  "Text_field" and "password_field" are <a href="https://en.mojodoc.perlzemi.com/Mojolicious::Plugin::TagHelpers.html"> Mojolicious tag helpers</a>. text_field is useful because it automatically restores the value to the form. For example, if the content of the form is incorrect, the same screen will be displayed, but at this time, the value will be restored automatically.
 </p>
-<h4>actionのurl_forメソッド</h4>
+<h4> action url_for method </h4>
 <p>
-  <a href="https://en.mojodoc.perlzemi.com/Mojolicious::Controller.html">url_forメソッド</a>に引数を与えなかった場合は、現在のURLを返してくれます。現在のURLのPOSTの処理で、この後の処理を行います。
+  If you don't give an argument to <a href="https://en.mojodoc.perlzemi.com/Mojolicious ::Controller.html"> url_for method</a>, it will return the current URL. In the POST processing of the current URL, the subsequent processing will be performed.
 </p>
-<h4>仮登録の処理</h4>
+<h4> Temporary registration processing </h4>
 <p>
-  仮登録の処理であることが明示的にわかるように、隠しフィールドとして「op」という名前で「register」という値を設定しています。
+  The hidden field is named "op" and has a value of "register" so that you can explicitly see that it is a temporary registration process.
 </p>
 <pre>
-      &lt;%= hidden_field 'op' =&gt; 'register' %&gt;
+      &lt;%= hidden_field'op'=&gt;'register'%&gt;
 </pre>
-<h4>HTML情報</h4>
+<h4> HTML information </h4>
 <p>
-  HTMLの情報です。
+  HTML information.
 </p>
 <ul>
-  <li><a href="https://en.webdesign.perlzemi.com/blog/20200226082049.html">divタグ</a></li>
-  <li><a href="https://en.webdesign.perlzemi.com/blog/20200317081313.html">テキストフィールド</a></li>
-  <li><a href="https://en.webdesign.perlzemi.com/blog/20200318075135.html">パスワードフィールド</a></li>
-  <li>サブミットボタン</li>
-  <li>隠しフィールド</li>
-  <li>formタグ</li>
-  <li>class属性</li>
+  <li> <a href="https://en.webdesign.perlzemi.com/blog/20200226082049.html"> div tag</a> </li>
+  <li> <a href="https://en.webdesign.perlzemi.com/blog/20200317081313.html"> Text field</a> </li>
+  <li> <a href="https://en.webdesign.perlzemi.com/blog/20200318075135.html"> Password field</a> </li>
+  <li> Submit button </li>
+  <li> Hidden field </li>
+  <li> form tag </li>
+  <li> class attribute </li>
 </ul>
-<h4>登録フォームのスタイルシート</h4>
+<h4> Registration form style sheet </h4>
 <p>
-  登録フォームのスタイルシートは「public/css/default.css」に記述してください。スマートフォン対応のCSS設定がされていることが前提になります。
+  Please describe the style sheet of the registration form in "public / css / default.css". It is assumed that the CSS settings for smartphones have been set.
 </p>
 <pre>
-  /* 会員登録 */
+  /* Member registration */
   .signup {
-    background:#fafafa;
-    padding:70px 0;
+    background: #fafafa;
+    padding: 70px 0;
   }
   .signup form {
-    width:calc(100% - 15px);
-    max-width:500px;
-    margin-left:auto;
-    margin-right:auto;
+    width: calc (100%-15px);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .signup-title {
-    font-weight:bold;
-    text-align:center;
-    font-size:28px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 28px;
   }
-  .signup input[type=text], .signup input[type=password] {
-    display:block;
-    width:calc(100% - 15px);
-    margin-left:auto;
-    margin-right:auto;
-    margin-top:12px;
-    margin-bottom:12px;
-    padding:17px 10px 15px 10px;
-    border-radius:3px;
-    border:1px solid #ddd;
-    font-size:16px;
+  .signup input [type = text], .signup input [type = password] {
+    display: block;
+    width: calc (100%-15px);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 17px 10px 15px 10px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    font-size: 16px;
   }
-  .signup input[type=submit] {
-    display:block;
-    width:calc(50%);
-    max-width:500px;
-    margin-left:auto;
-    margin-right:auto;
-    background:#D82E5D;
-    border:1px solid #D82E5D;
-    color:white;
-    padding:15px 0 13px 0;
-    border-radius:5px;
-    cursor:pointer;
-    font-size:20px;
+  .signup input [type = submit] {
+    display: block;
+    width: calc (50%);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background: # D82E5D;
+    border: 1px solid # D82E5D;
+    color: white;
+    padding: 15px 0 13px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
   }
 </pre>
-<h4>会員登録フォームのルーティング</h4>
+<h4> Membership registration form routing </h4>
 <p>
-  会員登録フォームのルーティングです。startupメソッドの中に<a href="https://en.mojodoc.perlzemi.com/Mojolicious::Guides::Routing.html">ルーティング</a>を記述しましょう。
+  It is the routing of the membership registration form. Write <a href="https://en.mojodoc.perlzemi.com/Mojolicious ::Guides::Routing.html"> Routing</a> in the startup method.
 </p>
 <pre>
 sub startup {
   my $self = shift;
 
-  # ルーター
+  # Router
   my $r = $self-&gt;routes;
   
-  $r-&gt;any('/signup' =&gt; sub { shift-&gt;render('signup') });
+  $r-&gt;any('/ signup' =&gt; sub {shift-&gt;render('signup')});
 }
 </pre>
 <p>
-  <a href="https://en.mojolicious.perlzemi.com/blog/20130731137527.html">AutoRouteプラグイン</a>を使ってルーティングを自動化している場合はテンプレートを「auto/signup.html.ep」に配置してください。
+  If you are using <a href="https://en.mojolicious.perlzemi.com/blog/20130731137527.html"> AutoRoute plugin</a> to automate routing, the template should be "auto / signup.html". Please place it in ".ep".
 </p>
 <pre>
 sub startup {
@@ -217,8 +214,7 @@ sub startup {
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

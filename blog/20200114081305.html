@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>会員登録フォームのバリデーション - Perl Web App Development Tutorial</title>
-<meta name="description" content="会員登録フォームのバリデーションの処理を書いていきましょう。バリデーションとは、ユーザーから入力されたデータが正しいものであるかを検証する作業のことをいいます。">
+<title> Validation of membership registration form  - Perl Web App Development Tutorial</title>
+<meta name="description" content="Let's write the validation process of the membership registration form. Validation is the process of verifying that the data entered by the user is correct.">
   </head>
   <body>
     <div class="container">
@@ -53,125 +51,124 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200114081305.html">会員登録フォームのバリデーション</a></h2>
+    <h2><a href="/blog/20200114081305.html"> Validation of membership registration form </a></h2>
 <p>
-  会員登録フォームのバリデーションの処理を書いていきましょう。バリデーションとは、ユーザーから入力されたデータが正しいものであるかを検証する作業のことをいいます。
+  Let's write the validation process of the membership registration form. Validation is the process of verifying that the data entered by the user is correct.
 </p>
-<h3>送信されたユーザー情報を取得する</h3>
+<h3> Get the sent user information </h3>
 <p>
-  送信されたユーザー情報は、パラメーターから取得します。ユーザー情報が入ったパラメーターを取得するには<a href="https://perlzemi.com/blog/20110501130707.html">paramメソッド</a>を使用します。
+  The sent user information is obtained from the parameters. Use the <a href="https://perlzemi.com/blog/20110501130707.html"> param method</a> to get the parameters that contain the user information.
 </p>
 <p>
-  <a href="/blog/20200107082558.html">会員登録フォーム</a>からPOSTされた情報を受け取ってみましょう。この処理では、POSTであって、仮登録の処理であるかを、事前に確認しています。
+  Let's receive the POSTed information from <a href="/blog/20200107082558.html"> Membership Registration Form</a>. In this process, it is confirmed in advance whether it is POST and it is a temporary registration process.
 </p>
 <pre>
 &lt;%
-  # POSTリクエストの処理
-  if ($self-&gt;method eq 'POST') {
-    # 処理方法
-    my $op = param('op');
-    $op = '' unless defined $op;
+  #Processing a POST request
+  if ($self-&gt;methodeq'POST') {
+    # Processing method
+    my $op = param ('op');
+    $op ='' unless defined $op;
     
-    # 仮登録の処理
-    if ($op eq 'register') {
-      # ユーザー情報の取得
-      # ユーザーID
-      my $code = param('code');
+    # Temporary registration processing
+    if ($op eq'register') {
+      #Get user information
+      # USER ID
+      my $code = param ('code');
       
-      # パスワード
-      my $password = param('password');
+      # password
+      my $password = param ('password');
       
-      # メールアドレス
-      my $mail = param('mail');
+      # email address
+      my $mail = param ('mail');
     }
   }
 %&gt;
 </pre>
-<h3>ユーザーIDのバリデーション</h3>
+<h3> User ID validation </h3>
 <p>
-  ユーザーIDが正しいものであることを確認しましょう。ユーザーIDが正しいというのは、Mojoliciousスタートアップでは次のように定義します。
+  Make sure your user ID is correct. The correct user ID is defined by the Mojolicious startup as follows:
 </p>
 <ul>
-  <li>ユーザーIDが指定されていること</li>
-  <li>ユーザーIDが、ASCIIコードの英数字とアンダーバーの1文字以上で構成されていること</li>
-  <li>ユーザーIDの長さがサービスで利用できるユーザーIDの長さの制限内であること</li>
-  <li>ユーザーIDが、存在するユーザーのユーザーIDと重複しないこと</li>
-  <li>ユーザーIDが、異なるメールアドレスのユーザー認証待ちのユーザーのユーザーIDと重複しないこと</li>
+  <li> User ID specified </li>
+  <li> The user ID must consist of at least one ASCII code alphanumerical and an underscore </li>
+  <li> The length of the user ID is within the limit of the length of the user ID that can be used by the service </li>
+  <li> The user ID does not overlap with the user ID of the existing user </li>
+  <li> The user ID does not overlap with the user ID of a user waiting for user authentication with a different email address </li>
 </ul>
 <p>
-  ユーザーIDは、一意でなければならないので、これをチェックするために、データベースにアクセスする必要があることに注意しましょう。
+  Note that the user ID must be unique, so you need to access the database to check this.
 </p>
 <p>
-  ユーザーIDのバリデーションを書いていきましょう。正しくない場合は、エラー情報に追加するようにしています。
+  Let's write the validation of the user ID. If it is not correct, I try to add it to the error information.
 </p>
-<h4>ユーザーIDが指定されていること</h4>
+<h4> User ID is specified </h4>
 <p>
-  まず最初に、ユーザーIDが空ではないことを確認しましょう。エラーは、$errorsという<a href="https://perlzemi.com/blog/20180208151809.html">ハッシュのリファレンス</a>に保存しておきます。文字列の長さは、<a href="https://perlzemi.com/blog/20080926122245.html">length関数</a>で取得できます。
+  First of all, make sure your user ID is not empty. Save the errors in a <a href="https://perlzemi.com/blog/20180208151809.html"> hash reference</a> called $errors. The length of the string can be obtained with the <a href="https://perlzemi.com/blog/20080926122245.html"> length function</a>.
 </p>
 <pre>
 my $errors = {};
-if (length $user_code &gt; 0) {
+if (length $user_code&gt; 0) {
   
 }
 else {
-  # エラー処理
-  $errors-&gt;{user_code} = 'ユーザーIDを指定してください。';
+  #Error handling
+  $errors-&gt;{user_code} ='Please specify the user ID. ';
 }
 
 </pre>
-<h4>ユーザーIDが、ASCIIコードの英数字とアンダーバーの1文字以上で構成</h4>
+<h4> User ID consists of one or more ASCII code alphanumers and underscores </h4>
 <p>
-  ユーザーIDが、ASCIIコードの英数字とアンダーバーの1文字(a-zA-Z0-9_)以上で構成されていることをチェックするには、Perlの正規表現を使いましょう。
+  Use Perl regular expressions to check that your user ID consists of at least one ASCII code alphanumerical and one underscore character (a-zA-Z0-9_).
 </p>
 <p>
-  <a href="https://perlzemi.com/blog/20100827127859.html">正規表現</a>は以下の二つのどちらかで表現できます。素直に<a href="https://perlzemi.com/blog/20200114103559.html">文字クラス</a>で書くか、PerlのASCIIコードで構成されたワード文字を表現する文字クラスを使います。
+  <a href="https://perlzemi.com/blog/20100827127859.html"> Regular expression</a> can be expressed by either of the following two methods. Write it obediently with <a href="https://perlzemi.com/blog/20200114103559.html"> character class</a>, or use a character class that represents a word character composed of Perl's ASCII code. ..
 </p>
 <pre>
-# 文字クラスで素直に書く
-^[a-zA-Z0-9_]+$
+# Write obediently with a character class
+^ [a-zA-Z0-9_] + $
 
-# PerlのASCIIコードで構成されたワード文字を表現する文字クラスを使う
-^\p{PosixWord}+$
+# Use a character class that represents a word character composed of Perl's ASCII code
+^ \ p {PosixWord} + $
 </pre>
 <p>
-  Perlのコードで書いてみます。
+  Let's write it in Perl code.
 </p>
 <pre>
 
-# Perlのワード文字(a-zA-Z0-9_)
-if ($user_code =~ /^\p{PosixWord}+$/) {
+# Perl word character (a-zA-Z0-9_)
+if ($user_code = ~ / ^ \ p {PosixWord} + $/) {
   
 }
 else {
-  # エラー処理
-  $errors-&gt;{user_code} = 'ユーザーIDに利用できる文字は「a-zA-Z0-9_」です。';
+  #Error handling
+  $errors-&gt;{user_code} ='The characters that can be used for the user ID are "a-zA-Z0-9_". ';
 }
 </pre>
-<h4>ユーザーIDの長さがサービスで利用できるユーザーIDの長さの制限内であること</h4>
+<h4> The length of the user ID is within the limit of the length of the user ID that can be used in the service </h4>
 <p>
-  ユーザーIDの長さがサービスで利用できるユーザーIDの長さの制限内であることをチェックしましょう。
+  Check that the user ID length is within the user ID length limit available for the service.
 </p>
 <p>
-  グローバルに利用されている、Twitterというサービスでは、ユーザーIDは15文字以内となっています。
+  In the service called Twitter, which is used globally, the user ID is limited to 15 characters.
 </p>
 <p>
-  Mojoliciousスタートアップでは、これを参考にして、ユーザーIDの長さの制限は、15文字以内にします。文字列の長さは、<a href="https://perlzemi.com/blog/20080926122245.html">length関数</a>で取得できます。
+  Mojolicious startup will use this as a reference to limit the length of the user ID to 15 characters or less. The length of the string can be obtained with the <a href="https://perlzemi.com/blog/20080926122245.html"> length function</a>.
 </p>
 <pre>
-# ユーザー名の長さの制限 15文字
+#Username length limit 15 characters
 if (length $user_code &lt;= 15) {
   
 }
 else {
-  # エラー処理
-  $errors-&gt;{user_code} = 'ユーザーIDに利用できる文字の長さは15文字以内です。';
+  #Error handling
+  $errors-&gt;{user_code} ='The maximum number of characters that can be used for a user ID is 15 characters. ';
 }
 </pre>
 <p>
-  (執筆中)
+  (Writing)
 </p>
 
   </div>
@@ -199,8 +196,7 @@ else {
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

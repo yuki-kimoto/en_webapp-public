@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>さくらVPSで「Perl + Mojolicious」Webアプリ開発 第1回 始まり - Perl Web App Development Tutorial</title>
-<meta name="description" content="開発を始めてから、Webアプリケーションのデプロイまでを、一貫して扱った記事というのは、まだ存在していないので、少しづつ書いてみようと思います。">
+<title> "Perl + Mojolicious" Web application development with Sakura VPS Part 1 Beginning  - Perl Web App Development Tutorial</title>
+<meta name="description" content="There is no article that consistently deals with everything from the start of development to the deployment of Web applications, so I will write it little by little.">
   </head>
   <body>
     <div class="container">
@@ -53,50 +51,49 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <ol class="bread" itemscope itemtype="http://schema.org/BreadcrumbList">
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <ol class = "bread" itemscope itemtype = "http://schema.org/BreadcrumbList">
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     <a itemprop="item" href="/" class="bread-home">
-      <span itemprop="name">
-        <img src="/images/bread/home.png" alt="Mojoliciousスタートアップ">
+      <span itemprop = "name">
+        <img src = "/ images / bread / home.png" alt = "Mojolicious Startup">
       </span>
-    </a>
-    <meta itemprop="position" content="1" />
+   </a>
+    <meta itemprop = "position" content = "1" />
   </li>
-  &#8250;
-  <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+  & # 8250;
+  <li itemprop = "itemListElement" itemscope itemtype = "http://schema.org/ListItem">
     here
   </li>
 </ol>
-<h2><a href="/blog/20190319171737.html">さくらVPSで「Perl + Mojolicious」Webアプリ開発 第1回 始まり</a></h2>
+<h2><a href="/blog/20190319171737.html"> "Perl + Mojolicious" Web application development with Sakura VPS Part 1 Beginning </a></h2>
 <p>
-  　開発を始めてから、Webアプリケーションのデプロイまでを、一貫して扱った記事というのは、まだ存在していないので、少しづつ書いてみようと思います。
+  There is no article that consistently deals with everything from the start of development to the deployment of Web applications, so I will write it little by little.
 </p>
-<h3>始まり始まり</h3>
+<h3> Beginning Beginning </h3>
 <p>
-  　PHPやRuby on Railsの本はたくさんあって、それなりに充実しているので、Webアプリケーションを作りやすいというが、多くの人の実感ではないかなぁと思います。でも、アプリケーションのできばえについていえば、PerlでMojoliciousというフレームワークを使うと、かなりよい仕上がりになります。
-</p>
-<p>
-  　でもアプリケーションを公開するまでの手順が、Webにも書籍にもないので、やり始めようとしたときに、進んでやりたいという気持ちがおきにくいんじゃないかなぁと思います。でも実際Mojoliciousというフレームワークはすこぶる便利で、Perlという言語も良いものなので、この記事を書くことによってお伝えしていこうかなと思います。
-</p>
-<h3>おすすめはVPS</h3>
-<p>
-  　今ならどうやってアプリケーションを公開すればよいのかなぁと思うと思いますが、お勧めはVPSあるいはクラウドを利用することです。クラウドは個人や小さな企業で始めるには、少しコストが高いなぁと感じると思います。だから、僕のおすすめは、VPSを最初は利用して、規模が大きくなったときに、すぐに移行できるように、アプリケーションを構成しておくことです。
+  There are many books on PHP and Ruby on Rails, and they are quite substantial, so it is easy to create web applications, but I think many people realize that. But when it comes to application performance, Perl uses a framework called Mojolicious and it looks pretty good.
 </p>
 <p>
-  　クラウドだったら自動拡張もサービスとして備えているのですけれど、まだ少しコストが高め。だから、VPSを使って、Webアプリケーションを作成して、きわめて移植性が高いようにWebアプリケーションを設計するというのがおすすめです。
+  However, there are no steps to publish the application on the Web or in books, so when I try to start doing it, I think it's hard to feel like I want to do it. But in fact, the framework called Mojolicious is very convenient, and the language Perl is also good, so I think I'll tell you by writing this article.
+</p>
+<h3> Recommended is VPS </h3>
+<p>
+  I wonder how to publish the application now, but I recommend using VPS or the cloud. I think the cloud is a bit expensive to start with as an individual or a small company. So my recommendation is to use the VPS first and then configure the application so that it can be migrated quickly as it grows.
 </p>
 <p>
-  　そんな風に利用できるアプリケーションを作成するのは、一度手順を覚えて慣れてしまえば、環境構築を含めて、1～2時間あればできるようになると思います。設定ファイルを一度書いてしまえば、使い回しもできますしね。
+  The cloud has automatic expansion as a service, but the cost is still a little high. Therefore, it is recommended to use VPS to create a web application and design the web application to be extremely portable.
 </p>
 <p>
-  　これから始める人にとっては、Webアプリケーションは最初に始めるときが、大きな山に感じると思います。その山を越えてしまえば、とても楽になるので、そんな方法を解説していきますね。
+  Creating an application that can be used like that will be possible in 1 to 2 hours, including environment construction, once you have learned the procedure and become accustomed to it. Once you write the configuration file, you can reuse it.
 </p>
-<h3>のんびり書いていくスタンス</h3>
 <p>
-  　僕はシンプルに要点だけを書くのが好きなのだけれど、今回の記事はのんびりいろいろと語りながらいこうと思います。記事が最後まで続けば、環境構築するための最短の手順をきちんと作ろうと思います。
+  For those who are starting from now on, I think that the first time to start a Web application feels like a big mountain. Once you cross that mountain, it will be very easy, so I will explain how to do that.
+</p>
+<h3> A stance of writing leisurely </h3>
+<p>
+  I like to write only the main points in a simple way, but I will talk about this article leisurely. If the article continues to the end, I will make the shortest procedure to build the environment properly.
 </p>
 
   </div>
@@ -124,8 +121,7 @@
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

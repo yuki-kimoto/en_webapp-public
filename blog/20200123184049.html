@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>新規作成、更新が成功した場合のメッセージボックス - Perl Web App Development Tutorial</title>
-<meta name="description" content="新規作成、更新が成功した場合のメッセージボックスのサンプルです。">
+<title> Message box when new creation or update is successful  - Perl Web App Development Tutorial</title>
+<meta name="description" content="This is a sample message box when a new creation or update is successful.">
   </head>
   <body>
     <div class="container">
@@ -53,63 +51,62 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200123184049.html">新規作成、更新が成功した場合のメッセージボックス</a></h2>
+    <h2><a href="/blog/20200123184049.html"> Message box when new creation or update is successful </a></h2>
 <p>
-  新規作成、更新が成功した場合のメッセージボックスのサンプルです。
+  This is a sample message box when a new creation or update is successful.
 </p>
 <ul>
-  <li>jQueryが必要</li>
-  <li>閉じるボタンを実装</li>
-  <li>色調は緑色</li>
-  <li>flashメソッドの使い方のサンプル</li>
-  <li>好きなメッセージの表示に対応</li>
-  <li>モーダルではなくページ上部に表示</li>
+  <li> jQuery required </li>
+  <li> Implemented close button </li>
+  <li> The color is green </li>
+  <li> Sample of how to use flash method </li>
+  <li> Supports display of favorite messages </li>
+  <li> Display at the top of the page instead of modal </li>
 </ul>
 <p>
-  フォームによる新規作成や更新が成功した場合は、一般的には、リダイレクトで、戻りたいページに移動します。この時flashメソッドを利用すると、リダイレクト後の接続一度だけ保存できるメッセージを設定できます。
+  If the new or updated form is successful, the redirect typically takes you to the page you want to return to. At this time, if you use the flash method, you can set a message that can be saved only once for the connection after redirect.
 </p>
 <pre>
-  $self-&gt;flash(success_message =&gt; '新規作成しました');
-  $self-&gt;redirect_to("/foo/bar");
+  $self-&gt;flash(success_message =&gt;'newly created');
+  $self-&gt;redirect_to("/ foo / bar");
   return;
 </pre>
 <p>
-  メッセージボックスを表示している部分です。flashメソッドにメッセージが含まれている場合だけ、表示を行います。
+  This is the part where the message box is displayed. Display only if the flash method contains a message.
 </p>
 <pre>
 &lt;style&gt;
   .success_message {
-    padding:3px 8px 25px 8px;
-    background:#eeffee;
-    border:1px solid #ccddcc;
-    border-radius:5px;
-    color:#336633;
-    width:calc(100% - 15px);
-    margin:10px auto;
+    padding: 3px 8px 25px 8px;
+    background: #eeffee;
+    border: 1px solid #ccddcc;
+    border-radius: 5px;
+    color: # 336633;
+    width: calc (100%-15px);
+    margin: 10px auto;
   }
   .success_message_close {
-    text-align:right;
+    text-align: right;
   }
   .success_message_close_button {
-    text-align:right;
-    cursor:pointer;
-    font-size:18px;
+    text-align: right;
+    cursor: pointer;
+    font-size: 18px;
   }
 &lt;/style&gt;
 
-    % if (my $success_message = flash('success_message')) {
-      &lt;div class="success_message"&gt;
-        &lt;div class="success_message_close"&gt;
-          &lt;span class="success_message_close_button" onclick="$(this).closest('.success_message').hide()"&gt;×&lt;/span&gt;
+    %if (my $success_message = flash ('success_message')) {
+      &lt;div class = "success_message"&gt;
+        &lt;div class = "success_message_close"&gt;
+          &lt;span class = "success_message_close_button" onclick = "$(this) .closest ('. success_message'). hide ()"&gt; × &lt;/span&gt;
         &lt;/div&gt;
-        &lt;div class="success_message_text"&gt;
-          &lt;%= $success_message %&gt;
+        &lt;div class = "success_message_text"&gt;
+          &lt;%= $success_message%&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-    % }
+    %}
 </pre>
 
   </div>
@@ -137,8 +134,7 @@
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

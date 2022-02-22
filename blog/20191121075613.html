@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>商品検索できるECサイトの作成 - Perl Web App Development Tutorial</title>
-<meta name="description" content="本当にMojoliciousとPerlを使うと、ビジネスのスタートアップに必要な機能と開発効率を満たせるの?">
+<title> Creating an EC site where you can search for products  - Perl Web App Development Tutorial</title>
+<meta name="description" content="Can Mojolicious and Perl really meet the functionality and development efficiency needed to start up a business?">
   </head>
   <body>
     <div class="container">
@@ -53,160 +51,159 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <h2><a href="/blog/20191121075613.html">商品検索できるECサイトの作成</a></h2>
+    <h2><a href="/blog/20191121075613.html"> Creating an EC site where you can search for products </a></h2>
 <p>
-  本当にMojoliciousとPerlを使うと、ビジネスのスタートアップに必要な機能と開発効率を満たせるの? 
+  Can Mojolicious and Perl really meet the functionality and development efficiency needed to start up a business?
 </p>
 <p>
-  まず最初に、ECサイトと呼ばれる、商品を登録、商品一覧を表示、商品の検索ができる簡単なWebアプリケーションを一緒に作ってみませんか?
+  First of all, why not create a simple web application called an EC site that allows you to register products, display product lists, and search for products?
 </p>
 <p>
-  お手持ちのWindowsかMac OSを使って、MojoliciousとPerlを使った商品検索アプリの開発体験ができます。
+  You can experience developing a product search app using Mojolicious and Perl using your Windows or Mac OS.
 </p>
 <p>
-  最初にWebアプリケーションが立ち上がるまでの所要時間は、30分～1時間程度です。
+  It takes about 30 minutes to 1 hour to launch the Web application for the first time.
 </p>
 <p>
-  簡単なECサイトを作ってみましょう。商品の登録、情報の更新、削除、商品の検索ができるサイトを作ります。ECサイトの作成は、他の種類のWebサイトを作成する場合でも応用が利きます。
+  Let's make a simple EC site. Create a site where you can register products, update and delete information, and search for products. Creating an EC site can be applied even when creating other types of websites.
 </p>
 <p>
-  あなたの身の回りにあるものを写真にとって、あなた専用のWebショップができちゃいます。どんなショッピングサイトができるかな。
+  You can create your own web shop by taking pictures of things around you. What kind of shopping site can I make?
 </p>
 <p>
-  ECサイトをさっそく作り始めてみましょう。商品検索のためのWebサイトを開発環境で立ち上げて、表示するところまでを、このページで解説します。
+  Let's start creating an EC site right away. This page explains how to set up a website for product search in the development environment and display it.
 </p>
 <p>
-  <a href="/blog/20191115083343.html">WindowsでのWeb開発環境を構築</a>、あるいは<a href="/blog/20191120072622.html">macOSでWeb開発環境を構築</a>していることが前提です。
+  <a href="/blog/20191115083343.html"> Build a web development environment on Windows</a> or <a href="/blog/20191120072622.html"> Build a web development environment on macOS</a> > It is assumed that you are doing it.
 </p>
 <p>
-  Windowsの場合は、msys2を立ち上げてください。macOSの場合は、ターミナルを立ち上げてください。
+  For Windows, start msys2. For macOS, launch the terminal.
 </p>
-<h3>Webアプリケーションのひな型作成</h3>
+<h3> Web application template creation </h3>
 <p>
-  まず最初にECサイトを作り始めるときの最初の作業は、Webアプリケーションのひな型を作成することです。Mojoliciousには、ひな型を作成するためのコマンドが用意されています。
-</p>
-<p>
-  Webアプリケーションの名前は、次の規則にそって作りましょう。先頭が大文字のアルファベット、二文字目以降は小文字です。Mojoliciousスタートアップでは「わたしのお店」を意味する「Myshop」という名前にしたいと思います。
+  The first task when you first start creating an EC site is to create a template for your web application. Mojolicious provides commands for creating templates.
 </p>
 <p>
-  Webアプリケーションのひな型を作成するには、以下のコマンドを使用します。名前の部分は、自分で決めることができます。
+  Create the name of your web application according to the following rules. The first letter is an uppercase alphabet, and the second and subsequent letters are lowercase. At Mojolicious startups, I would like to name it "My shop" which means "my shop".
 </p>
 <p>
-  コマンドラインから以下のコマンドを実行して、Enterキーを押してみてください。
+  To create a template for your web application, use the following command. You can decide the part of the name by yourself.
+</p>
+<p>
+  Try running the following command from the command line and pressing Enter.
 </p>
 <pre>
-# Webアプリケーションのひな型を「Myshop」という名前で作成
+#Create a web application template with the name "Myshop"
 mojo generate app Myshop
 </pre>
 <p>
-  以下のように生成されたディレクトリとファイルが出力されます。
+  The generated directories and files are output as shown below.
 </p>
 <pre>
-  [mkdir] /home/kimoto/labo/tmp/myshop/script
-  [write] /home/kimoto/labo/tmp/myshop/script/myshop
-  [chmod] /home/kimoto/labo/tmp/myshop/script/myshop 744
-  [mkdir] /home/kimoto/labo/tmp/myshop/lib
+  [mkdir] / home / kimoto / labo / tmp / myshop / script
+  [write] / home / kimoto / labo / tmp / myshop / script / myshop
+  [chmod] / home / kimoto / labo / tmp / myshop / script / myshop 744
+  [mkdir] / home / kimoto / labo / tmp / myshop / lib
   [write] /home/kimoto/labo/tmp/myshop/lib/Myshop.pm
-  [exist] /home/kimoto/labo/tmp/myshop
+  [exist] / home / kimoto / labo / tmp / myshop
   [write] /home/kimoto/labo/tmp/myshop/myshop.conf
-  [mkdir] /home/kimoto/labo/tmp/myshop/lib/Myshop/Controller
+  [mkdir] / home / kimoto / labo / tmp / myshop / lib / Myshop / Controller
   [write] /home/kimoto/labo/tmp/myshop/lib/Myshop/Controller/Example.pm
-  [mkdir] /home/kimoto/labo/tmp/myshop/t
+  [mkdir] / home / kimoto / labo / tmp / myshop / t
   [write] /home/kimoto/labo/tmp/myshop/t/basic.t
-  [mkdir] /home/kimoto/labo/tmp/myshop/public
+  [mkdir] / home / kimoto / labo / tmp / myshop / public
   [write] /home/kimoto/labo/tmp/myshop/public/index.html
-  [mkdir] /home/kimoto/labo/tmp/myshop/templates/layouts
+  [mkdir] / home / kimoto / labo / tmp / myshop / templates / layouts
   [write] /home/kimoto/labo/tmp/myshop/templates/layouts/default.html.ep
-  [mkdir] /home/kimoto/labo/tmp/myshop/templates/example
+  [mkdir] / home / kimoto / labo / tmp / myshop / templates / example
   [write] /home/kimoto/labo/tmp/myshop/templates/example/welcome.html.ep
 </pre>
 <p>
-  Webアプリケーション名は、先頭が大文字でしたがディレクトリ名は「myshop」のように小文字になっていることに注意してください。
+  Note that the web application name was capitalized at the beginning, but the directory name is lowercase, such as "myshop".
 </p>
-<h3>Webアプリケーションの立ち上げ</h3>
+<h3> Launching a web application </h3>
 <p>
-  Webアプリケーションをさっそく立ち上げてみましょう。
+  Let's launch the web application right away.
 </p>
 <p>
-  まず最初に、Webアプリケーションのディレクトリ「myshop」に移動します。
+  First of all, go to the web application directory "myshop".
 </p>
 <pre>
 cd myshop
 </pre>
 <p>
-  ここでlsコマンドをを使って、ファイルを表示してみましょう。-lオプションを使用すると、詳細表示になります。
+  Now let's use the ls command to display the file. Use the -l option for a more detailed view.
 </p>
 <pre>
 ls -l
 </pre>
 <p>
-  次のように表示されます。
+  It will be displayed in the following manner.
 </p>
 <pre>
 drwxrwxr-x 3 kimoto kimoto 4096 Nov 21 08:21 lib
--rw-rw-r-- 1 kimoto kimoto   62 Nov 21 08:21 myshop.conf
+-rw-rw-r-- 1 kimoto kimoto 62 Nov 21 08:21 myshop.conf
 drwxrwxr-x 2 kimoto kimoto 4096 Nov 21 08:21 public
 drwxrwxr-x 2 kimoto kimoto 4096 Nov 21 08:21 script
 drwxrwxr-x 2 kimoto kimoto 4096 Nov 21 08:21 t
 drwxrwxr-x 4 kimoto kimoto 4096 Nov 21 08:21 templates
 </pre>
 <p>
-  それぞれのディレクトリとファイルについて簡単に解説しておきます。
+  I will briefly explain each directory and file.
 </p>
-<h4>lib - モジュールのディレクトリ</h4>
+<h4> lib --module directory </h4>
 <p>
-  libの中には、Webアプリケーションを構成するPerlのモジュールを格納するのに利用します。モジュールとは、プログラムを構成する部品のことです。
+  It is used to store Perl modules that make up the Web application in lib. A module is a component that makes up a program.
 </p>
-<h4>myshop.conf - 設定ファイル</h4>
+<h4> myshop.conf --configuration file </h4>
 <p>
-  myshop.confは、Webアプリケーションの設定ファイルです。
+  myshop.conf is a web application configuration file.
 </p>
-<h4>public - 公開ファイル</h4>
+<h4> public --public file </h4>
 <p>
-  publicには、画像やCSSやJavaScriptなど、静的なファイルを格納するのに利用します。
+  Public is used to store static files such as images, CSS and JavaScript.
 </p>
-<h4>script</h4>
+<h4> script </h4>
 <p>
-  Webアプリケーションを起動するためのPerlのスクリプトが格納されています。
+  Contains Perl scripts for launching web applications.
 </p>
-<h4>t</h4>
+<h4> t </h4>
 <p>
-  「t」はWebアプリケーションの試験を格納するためのディレクトリです。
+  "T" is a directory for storing web application tests.
 </p>
-<h4>templates</h4>
+<h4> templates </h4>
 <p>
-  「templates」は、Webアプリケーションのテンプレートファイルを格納するのに利用します。ブラウザから見える画面を変更するには、この中のファイルを修正します。
+  "Templates" is used to store the template file of the web application. To change the screen you see from your browser, modify the files in it.
 </p>
-<h4>Webアプリケーションの起動</h4>
+<h4> Launching a web application </h4>
 <p>
-  Webアプリケーションを起動してみましょう。Webアプリケーションを起動するにはMojoliciousの「morbo」コマンドを使用します。morboの引数には、scriptディレクトリの中に格納されている、Webアプリケーションの起動スクリプトを指定します。
+  Let's start the web application. Use Mojolicious's "morbo" command to launch a web application. In the argument of morbo, specify the startup script of the Web application stored in the script directory.
 </p>
 <pre>
-morbo script/myshop
+morbo script / myshop
 </pre>
 <p>
-  次のように表示され、Webアプリケーションが起動します。
+  The following is displayed and the web application is launched.
 </p>
 <pre>
 Server available at http://127.0.0.1:3000
 </pre>
 <p>
-  IEやChromeやFirefoxやSafariを立ち上げて、URLの欄に、上で表示されたURLを入力してEnterを押してみましょう。左クリックで、ドラッグすることで、コマンドライン上の文字をコピーできます。
+  Launch IE, Chrome, Firefox or Safari, enter the URL displayed above in the URL field, and press Enter. You can copy the characters on the command line by left-clicking and dragging.
 </p>
 <p>
-  画面に以下の文字が表示されるとWebアプリケーションの立ち上げが成功しています。
+  When the following characters are displayed on the screen, the web application has been successfully launched.
 </p>
 <pre>
 Welcome to the Mojolicious real-time web framework!
 </pre>
 <p>
-  おめでとうございます。これであなたも、Web開発のスタートラインに立ちました!
+  Congratulations. You are now at the starting line of web development!
 </p>
 <p>
-  ここから、商品の画像を追加したりして、ECサイトを成長させていきます。
+  From here, we will grow the EC site by adding images of products.
 </p>
 
   </div>
@@ -234,8 +231,7 @@ Welcome to the Mojolicious real-time web framework!
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"

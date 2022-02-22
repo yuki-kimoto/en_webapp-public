@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- meta -->
-<meta charset="UTF-8">
+    <!-- meta --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
@@ -26,8 +25,7 @@
   });
 </script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-K33WZSRBKY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -35,8 +33,8 @@
 
   gtag('config', 'G-K33WZSRBKY');
 </script>
-<title>ページネーションの実装 - Perl Web App Development Tutorial</title>
-<meta name="description" content="一覧ページ・検索結果ページにページネーションを導入しましょう。">
+<title> Is it possible to leave the other query strings in the URL and change only the page number?  - Perl Web App Development Tutorial</title>
+<meta name="description" content="= $dbi->model('book')->select(">
   </head>
   <body>
     <div class="container">
@@ -53,313 +51,91 @@
           <div class="entry">
   <div class="top">
     <!-- top -->
-
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200120180855.html">ページネーションの実装</a></h2>
+    <p>
+  = $dbi->model('book')->select(
+</p>
+  ['id','name'],
+  append => "limit $offset, $count_per_page",
+  where => $where
 <p>
-  一覧ページ・検索結果ページにページネーションを導入しましょう。
+  )->all;
 </p>
 <p>
-  ページネーションとは「次のページ」「前のページ」「先頭のページ」「最後のページ」、「ページナビゲーション 1, 2, 3 ...」などの機能のことです。
+  my $total = $dbi->model('book')->select('count (*)', where => $where)->value;
 </p>
-<p>
-  結果が、30件～50件を超えてくると、ページネーションを導入したくなりますね。
-</p>
-<h3>ページネーションのためのモジュールのインストール</h3>
-<p>
-  Perlには、ページネーションを支援してくれるモジュールがあります。
-</p>
-<p>
-  ページネーションの基本モジュールとして「<a href="https://perlzemi.com/blog/20110527130888.html">Data::Page</a>」をインストールします。
-</p>
-<p>
-  <a href="https://perlzemi.com/blog/20131118138474.html">Data::Page::Navigation</a>は、Data::Pageにページナビゲーション機能を追加してくれるモジュールです。こちらもインストールしましょう。
-</p>
-<p>
-  モジュールのインストールはcpanmを使って行います。
-</p>
-<pre>
-cpanm Data::Page
-cpanm Data::Page::Navigation
 </pre>
-<h3>ページネーションの基礎</h3>
+<h4><a href="/blog/20200120180855.html"> Is it possible to leave the other query strings in the URL and change only the page number? </a></h4>
 <p>
-  テーブルに本のデータが1000件存在すると仮定しましょう。
-</p>
-<pre>
-id =&gt; 1,    name =&gt; 'Book1',    price =&gt; 1200
-id =&gt; 2,    name =&gt; 'Book2',    price =&gt; 2000
-...
-id =&gt; 1000, name =&gt; 'Book1000', price =&gt; 450
-</pre>
-<p>
-  Data::Pageモジュールは、ページネーションに必要な情報を自動的に計算してくれますが、そのために必要な情報を知っておく必要があります。
-</p>
-<h4>全体の件数</h4>
-<p>
-  まず最初に必要な情報は、全体の件数です。DBIx::Customのselectメソッドと、mysqlのcount関数を使って、件数を取得してみましょう。
-</p>
-<pre>
-# 全体の件数
-my $total = $dbi-&gt;model('book')-&gt;select('count(*)')-&gt;value;
-</pre>
-<h4>一ページに表示する個数</h4>
-<p>
-  次に必要なのは、一ページに表示する個数です。これは、30～50くらいの値を設定します。
-</p>
-<pre>
-my $count_per_page = 30;
-</pre>
-<h4>現在のページ</h4>
-<p>
-  最後は、現在のページです。これは、パラメーターから受け取り、長さがない場合、または、1より小さい場合は、1を指定しましょう。
-</p>
-<pre>
-my $page = param('page');
-$page = 1 if !length $page || $page &lt; 1;
-</pre>
-<h4>オフセットの計算</h4>
-<p>
-  ひとつのページに表示するデータを取り出すには、、mysqlのlimit句を使って、どの位置からデータを取得するかを指定する必要があります。
+  The sample described here supports changing only the page number.
 </p>
 <p>
-  このために、オフセットを計算します。
+  Use url_with instead of url_for. The point is to pass the hash reference "{page => $page}" as an argument of the query method.
 </p>
-<pre>
-my $offset = $count_per_page * ($page - 1);
-</pre>
-<h4>データの取得</h4>
+<h4> Is it possible to make pagination into parts? </H4>
 <p>
-  mysqlのbookテーブルから、指定したページに表示するデータを取得します。DBIx::Customのselectメソッドと、mysqlのlimit句を使って、件数を取得してみましょう。appendはorder by句や、limit句など自由に追加するためのオプションです。
-</p>
-<pre>
-my $books = $dbi-&gt;model('book')-&gt;select(['id', 'name'], append =&gt; "limit $offset, $count_per_page")-&gt;all;
-</pre>
-<h4>Data::Pageオブジェクトの生成</h4>
-<p>
-  これで、Data::Pageオブジェクトを生成する準備が整いました。
-</p>
-<pre>
-# Data::Pageオブジェクトの生成
-my $pager = Data::Page-&gt;new($total, $count_per_page, $page);
-</pre>
-<h4>前のページを取得</h4>
-<p>
-  前のページを取得するには、previous_pageメソッドを使用します。前のページがない場合は、undefが返ってきます。
-</p>
-<pre>
-my $previous_page = $pager-&gt;previous_page;
-</pre>
-<h4>次のページを取得</h4>
-<p>
-  次のページを取得するには、next_pageメソッドを使用します。次のページがない場合は、undefが返ってきます。
-</p>
-<pre>
-my $next_page = $pager-&gt;next_page;
-</pre>
-<h4>最初のページ番号</h4>
-<p>
-  最初のページ番号を取得するにはfirst_pageメソッドを使用します。常に1を返します。
-</p>
-<pre>
-my $first_page = $pager-&gt;first_page;
-</pre>
-<h4>最後のページ番号</h4>
-<p>
-  最後のページ番号を取得するにはlast_pageメソッドを使用します。これは総ページ数と同じ値になります。
-</p>
-<pre>
-my $last_page = $pager-&gt;last_page;
-</pre>
-<h3>ページナビゲーション機能</h3>
-<p>
-  1, 2, 3, 4などのページナビゲーション機能を追加してみましょう。たとえば15ページ目にいるときは、15ページ目の周辺のページを合わせて、ページ番号を十個取得できます。
-</p>
-<pre>
-# ページナビゲーションの個数を設定
-$pager-&gt;pages_per_navigation(10);
-
-# 10 11 12 13 14 15 16 17 18 19
-my @nav_pages = $pager-&gt;pages_in_navigation;
-</pre>
-<h3>ページネーションのサンプルコード</h3>
-<p>
-  ページネーションのサンプルコードです。最初のページ、前のページ、次のページ、最後のページのサンプルです。ページが複数あるときだけ、ページネーションを表示するようにしています。
-</p>
-<h4>アプリケーションクラス</h4>
-<pre>
-use Data::Page;
-use Data::Page::Navigation;
-</pre>
-<h4>テンプレート</h4>
-<pre>
-&lt;%
-  # 現在のページ
-  my $page = param('page');
-  $page = 1 if !length $page || $page &lt; 1;
-  
-  # DBI
-  my $dbi = $self-&gt;app-&gt;dbi;
-  
-  # 1ページに表示する個数
-  my $count_per_page = 30;
-  
-  # オフセット
-  my $offset = $count_per_page * ($page - 1);
-  
-  # 本の一覧
-  my $books = $dbi-&gt;model('book')-&gt;select(
-    ['id', 'name'],
-    append =&gt; "limit $offset, $count_per_page"
-  )-&gt;all;
-  
-  # 本の総数
-  my $total = $dbi-&gt;model('book')-&gt;select('count(*)')-&gt;value;
-  
-  # ページネーションオブジェクト
-  my $pager = Data::Page-&gt;new($total, $count_per_page, $page);
-%&gt;
-
-  % for my $book (@$books) {
-    &lt;div&gt;
-      &lt;div&gt;本のID &lt;%= $book-&gt;{id} %&gt;&lt;/div&gt;
-      &lt;div&gt;本のタイトル &lt;%= $book-&gt;{name} %&gt;&lt;/div&gt;
-    &lt;/div&gt;
-  % }
-  
-  &lt;%
-    # ページナビゲーションの個数を設定
-    $pager-&gt;pages_per_navigation(10);
-    
-    # 前のページ
-    my $previous_page = $pager-&gt;previous_page;
-    
-    # 次のページ
-    my $next_page = $pager-&gt;next_page;
-    
-    # 最初のページ
-    my $first_page = $pager-&gt;first_page;
-    
-    # 最後のページ
-    my $last_page = $pager-&gt;last_page;
-
-    # 周辺のページ番号を取得
-    my @nav_pages = $pager-&gt;pages_in_navigation;
-  %&gt;
-  % if ($first_page != $last_page) {
-    &lt;div class="pagenation"&gt;
-      &lt;a href="&lt;%= url_with-&gt;query({page =&gt; undef}) %&gt;"&gt;最初へ&lt;/a&gt;
-      % if ($previous_page) {
-        &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $previous_page}) %&gt;"&gt;前へ&lt;/a&gt;
-      % }
-      % for my $nav_page (@nav_pages) {
-        % if ($nav_page eq $page) {
-          &lt;span&gt;&lt;%= $nav_page %&gt;&lt;/a&gt;
-        % } else {
-          &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $nav_page}) %&gt;"&gt;&lt;%= $nav_page %&gt;&lt;/a&gt;
-        % }
-      % }
-      % if ($next_page) {
-        &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $next_page}) %&gt;"&gt;次へ&lt;/a&gt;
-      % }
-      &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $last_page}) %&gt;"&gt;最後へ&lt;/a&gt;
-    &lt;/div&gt;
-  % }
-</pre>
-<p>
-  $selfはMojolicious::Controllerです。appでMojoliciousを継承しているアプリケーションオブジェクトを取得します。dbiで、DBIx::Customオブジェクトを取得しています。
+  Yes, you may want to display pagination up and down or share it with other pages.
 </p>
 <p>
-  url_withとqueryへハッシュリファレンスを渡す方法を使用すると、現在のURLのクエリを維持しながら、ページ番号だけ置換することができます。
-</p>
-<h3>よくある質問</h3>
-<h4>where句と組み合わせることはできますか?</h4>
-<p>
-  はい、where句を組み合わせることができます。本のタイトルに、Perlを含むの例です。
-</p>
-<pre>
-my $where = [
-  'title like :title', # where句
-  {title =&gt; '%Perl%'}, # パラメーター
-];
-my $books = $dbi-&gt;model('book')-&gt;select(
-  ['id', 'name'],
-  append =&gt; "limit $offset, $count_per_page",
-  where =&gt; $where
-)-&gt;all;
-my $total = $dbi-&gt;model('book')-&gt;select('count(*)', where =&gt; $where)-&gt;value;
-</pre>
-<h4>URLの他のクエリ文字列をそのままにして、ページ番号だけを変えることはできますか?</h4>
-<p>
-  ここで解説したサンプルは、ページ番号だけの変更に対応しています。
+  In such cases, you can use the include function.
 </p>
 <p>
-  url_forではなくurl_withを使うこと。queryメソッドの引数にハッシュリファレンス「{page => $page}」を渡すことがポイントです。
-</p>
-<h4>ページネーションを部品化することはできますか?</h4>
-<p>
-  はい、ページネーションは、上下に表示したり、他のページと共有したい場合がありますね。
+  Create a template file "templates / include / pagenation.html.ep".
 </p>
 <p>
-  そのような場合は、include機能を使うことができます。
-</p>
-<p>
-  テンプレートファイル「templates/include/pagenation.html.ep」を作成します。
-</p>
-<p>
-  stashを使ってpagerを受け取ります。
+  Receive the pager using stash.
 </p>
 <pre>
   &lt;%
-    my $pager = stash('pager');
+    my $pager = stash ('pager');
     
-    # 現在のページ
+    # current page
     my $page = $pager-&gt;current_page;
     
-    # ページナビゲーションの個数を設定
+    #Set the number of page navigation
     $pager-&gt;pages_per_navigation(10);
     
-    # 前のページ
+    # Previous page
     my $previous_page = $pager-&gt;previous_page;
     
-    # 次のページ
+    # Following page
     my $next_page = $pager-&gt;next_page;
     
-    # 最初のページ
+    # the first page
     my $first_page = $pager-&gt;first_page;
     
-    # 最後のページ
+    #Last page
     my $last_page = $pager-&gt;last_page;
 
-    # 周辺のページ番号を取得
-    my @nav_pages = $pager-&gt;pages_in_navigation;
+    #Get the page number around
+    my @nav_pages = $pagesr-&gt;pages_in_navigation;
   %&gt;
-  % if ($first_page != $last_page) {
-    &lt;div class="pagenation"&gt;
-      &lt;a href="&lt;%= url_with-&gt;query({page =&gt; undef}) %&gt;"&gt;最初へ&lt;/a&gt;
-      % if ($previous_page) {
-        &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $previous_page}) %&gt;"&gt;前へ&lt;/a&gt;
-      % }
-      % for my $nav_page (@nav_pages) {
-        % if ($nav_page eq $page) {
-          &lt;span&gt;&lt;%= $nav_page %&gt;&lt;/a&gt;
-        % } else {
-          &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $nav_page}) %&gt;"&gt;&lt;%= $nav_page %&gt;&lt;/a&gt;
-        % }
-      % }
-      % if ($next_page) {
-        &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $next_page}) %&gt;"&gt;次へ&lt;/a&gt;
-      % }
-      &lt;a href="&lt;%= url_with-&gt;query({page =&gt; $last_page}) %&gt;"&gt;最後へ&lt;/a&gt;
+  %if ($first_page! = $last_page) {
+    &lt;div class = "pagenation"&gt;
+      &lt;a href="&lt;%=url_with-&gt;query({page =&gt; undef})%&gt; "&gt; To the beginning&lt;/a&gt;
+      %if ($previous_page) {
+        &lt;a href="&lt;%=url_with-&gt;query({page =&gt; $previous_page})%&gt; "&gt; Previous&lt;/a&gt;
+      %}
+      %for my $nav_page (@nav_pages) {
+        %if ($nav_page eq $page) {
+          &lt;span&gt; &lt;%= $nav_page%&gt;&lt;/a&gt;
+        %} else {
+          &lt;a href="&lt;%=url_with-&gt;query({page =&gt; $nav_page})%&gt; "&gt; &lt;%= $nav_page%&gt;&lt;/a&gt;
+        %}
+      %}
+      %if ($next_page) {
+        &lt;a href="&lt;%=url_with-&gt;query({page =&gt; $next_page})%&gt; "&gt; Next&lt;/a&gt;
+      %}
+      &lt;a href="&lt;%=url_with-&gt;query({page =&gt; $last_page})%&gt; "&gt; To the end&lt;/a&gt;
     &lt;/div&gt;
-  % }
+  %}
 </pre>
 <p>
-  使う側は、以下のようにします。
+  The user side should do the following.
 </p>
 <pre>
-%= include 'include/pagenation', pager =&gt; $pager;
+%= include'include / pagenation', pager =&gt; $pager;
 </pre>
 
   </div>
@@ -387,8 +163,7 @@ my $total = $dbi-&gt;model('book')-&gt;select('count(*)', where =&gt; $where)-&g
           <div style="margin-bottom:30px">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
      crossorigin="anonymous"></script>
-<!-- ディスプレイ縦長 -->
-<ins class="adsbygoogle"
+<!-- ディスプレイ縦長 --><ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4525414114581084"
      data-ad-slot="4544919209"
